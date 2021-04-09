@@ -74,6 +74,8 @@ class WaterTowerDataForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.fields['Dipslide'].widget.attrs.update(
+            {'class': 'w3-input w3-border w3-round w3-border-black'})
         self.fields['inhibitor'].widget.attrs.update(
             {'class': 'w3-input w3-border w3-round w3-border-black'})
         self.fields['cond'].widget.attrs.update(
@@ -121,7 +123,7 @@ class WaterTowerDataForm(forms.ModelForm):
         self.fields['p4'].widget.attrs.update(
             {'class': 'w3-input w3-border w3-round w3-border-black'})
 
-
+        self.fields['Dipslide'].label = "Dipslide"
         self.fields['inhibitor'].label = "Inhibiteur"
         self.fields['cond'].label = "Cond"
         self.fields['orp'].label = "ORP"
