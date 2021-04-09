@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    {% load static %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Home - Curatio</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    {#    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>#}
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+    <script src="https://kit.fontawesome.com/4bd1afbea6.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" type="text/css"
+          href="https://cdn.datatables.net/v/dt/jq-3.3.1/jszip-2.5.0/dt-1.10.24/b-1.7.0/b-colvis-1.7.0/b-html5-1.7.0/fh-3.1.8/r-2.2.7/sc-2.0.3/sl-1.3.2/datatables.min.css"/>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+    <script type="text/javascript"
+            src="https://cdn.datatables.net/v/dt/jq-3.3.1/jszip-2.5.0/dt-1.10.24/b-1.7.0/b-colvis-1.7.0/b-html5-1.7.0/fh-3.1.8/r-2.2.7/sc-2.0.3/sl-1.3.2/datatables.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'core/style.css' %}">
+</head>
+
+<body class="bg_bleu_pale_curatio" style="font-family: Montserrat">
+<!-- Navbar (sit on top) -->
+<div class="w3-top w3-margin-bottom">
+    <div class="w3-bar w3-white w3-large w3-padding w3-card">
+        <a href="{% url 'home' %}" class="w3-bar-item w3-wide w3-button w3-padding-large w3-hover-white"><b>Curatio</b></a>
+        <!-- Float links to the right. Hide them on small screens -->
+        <div class="w3-right w3-hide-small">
+            {% if request.user.is_authenticated %}
+                <a href="{% url 'eaubelix' %}"
+                   class="w3-bar-item w3-hide-small w3-hide-medium w3-padding-large w3-button w3-hover-white">Eaux-Belix</a>
+                <a href="{% url 'formations' %}"
+                   class="w3-bar-item w3-hide-small w3-hide-medium w3-padding-large w3-button w3-hover-white">Formations</a>
+
+                <div class="w3-dropdown-click" style="padding: 0px; margin: 0px;">
+                    <button onclick="smallNavigation('account_options')"
+                            class="w3-hide-small w3-hide-medium w3-block w3-padding-large bg_bleu_flash_curatio w3-hover-white"
+                            style="margin-right: 15px;">
+                        Mon Compte
+                    </button>
+                    <div id="account_options" class="w3-dropdown-content w3-bar-block w3-hover-white">
+                        {% if request.user.type == "CLIENT" %}
+                            <a href="{% url 'operators' %}"
+                               class="w3-bar-item w3-hide-small w3-hide-medium w3-small w3-button w3-hover-white"><i
+                                    class="fa fa-users"></i> Gestion des opérateurs </a>
+                        {% endif %}
+                        <a href="{% url 'password_reset' %}"
+                           class="w3-bar-item w3-hide-small w3-hide-medium w3-button w3-small w3-hover-white"><i
+                                class="fas fa-key"></i> Changer
+                            de Mot de Passe</a>
+                        <a href="{% url 'logout' %}"
+                           class="w3-bar-item w3-hide-small w3-hide-medium w3-button w3-text-red w3-hover-white"><i
+                                class="fas fa-lock"></i> Deconnexion</a>
+                    </div>
+                </div>
+            {% else %}
+                <a href="{% url 'home' %}"
+                   class="w3-bar-item w3-hide-small w3-hide-medium w3-padding-large w3-button w3-hover-white">Acceuil</a>
+                <a href="{% url 'home' %}"
+                   class="w3-bar-item w3-hide-small w3-hide-medium w3-padding-large w3-button w3-text-blue w3-hover-white">Connexion</a>
+            {% endif %}
+        </div>
+        <a class="w3-bar-item w3-button w3-hide-large w3-right w3-padding-large w3-hover-white w3-large"
+           href="javascript:void(0);" onclick="smallNavigation('navSmall')" title="Ouvrir la navigation"><i
+                class="fa fa-bars"></i></a>
+    </div>
+
+
+    <!-- Navbar on small screens -->
+    <div id="navSmall" class="w3-bar-block w3-white w3-large w3-hide w3-hide-large w3-padding ">
+        {% if request.user.is_authenticated %}
+            <a href="{% url 'home' %}" class="w3-bar-item w3-button w3-padding-large w3-hover-white">Eaux-Belix</a>
+            <a href="{% url 'formations' %}"
+               class="w3-bar-item w3-button w3-padding-large w3-hover-white">Fromations</a>
+            <a href="{% url 'logout' %}" class="w3-bar-item w3-button w3-padding-large w3-hover-white w3-text-red">Deconnexion</a>
+        {% else %}
+            <a href="{% url 'home' %}" class="w3-bar-item w3-button w3-padding-large w3-hover-white">Acceuil</a>
+            <a href="{% url 'home' %}" class="w3-bar-item w3-button w3-padding-large w3-text-blue w3-hover-white">Connexion</a>
+        {% endif %}
+    </div>
+</div>
+<div style="padding-top: 71px; padding-bottom: 71px;">
+    {% block content %}{% endblock %}
+</div>
+
+<script>
+    // Used to toggle the menu on small screens when clicking on the menu button
+    function smallNavigation(id) {
+        var x = document.getElementById(id);
+        if (x.className.indexOf("w3-show") == -1) {
+            x.className += " w3-show";
+        } else {
+            x.className = x.className.replace(" w3-show", "");
+        }
+    }
+
+
+    // Get the Sidebar Eaubelix
+    var sideBarDashboard = document.getElementById("sideBarDashboard");
+
+    // Get the DIV with overlay effect
+    var overlayBg = document.getElementById("myOverlay");
+
+    // Toggle between showing and hiding the sidebar, and add overlay effect
+    function open_sideBarDashboard() {
+        if (sideBarDashboard.style.display === 'block') {
+            sideBarDashboard.style.display = 'none';
+            overlayBg.style.display = "none";
+        } else {
+            sideBarDashboard.style.display = 'block';
+            overlayBg.style.display = "block";
+        }
+    }
+
+    // Close the sidebar with the close button
+    function close_sideBarDashboard() {
+        sideBarDashboard.style.display = "none";
+        overlayBg.style.display = "none";
+    }
+
+    function openTab(evt, id, tabs, tabslink, bg_color) {
+        var i;
+        var x = document.getElementsByClassName(tabs);
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+            console.log(i)
+        }
+        tablinks = document.getElementsByClassName(tabslink);
+        for (i = 0; i < x.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(bg_color, "");
+        }
+        document.getElementById(id).style.display = "block";
+        evt.currentTarget.className += (" " + bg_color);
+    }
+
+    $(document).ready(function () {
+        var datatable = $('table.datatable').DataTable({
+            rowReorder: true,
+            columnDefs: [
+                {orderable: true, className: 'reorder', targets: 0},
+                {orderable: false, targets: '_all'},
+            ],
+            "searching": false,
+            language: {
+                url: 'https://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/French.json'
+            }
+        });
+
+        datatable.columns('.hidden').visible(false);
+    });
+
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,47 @@
+{% extends  "core/base.html" %}
+{% block content %}
+
+{#    {% if user.is_superuser %}#}
+{#        <div class="w3-container bg_gris_clair_curatio">#}
+{#            <form enctype="multipart/form-data" method="POST" action="{% url 'upload_formation' %}">#}
+{#                {% csrf_token %}#}
+{#                {{ formations_form.as_p }}#}
+{#                <input class="w3-margin" type="submit" value="Upload"/>#}
+{#            </form>#}
+{#        </div>#}
+{##}
+{#    {% endif %}#}
+
+    <div class="w3-bar w3-xlarge">
+        {% for section in sections %}
+            <button class="w3-bar-item w3-button gris_clair_curatio w3-hover-white tablink"
+                    onclick="openTab(event, '{{ section.id }}', 'tab', 'tablink', 'w3-white')"><span class="w3-medium">{{ section.name }}</span></button>
+        {% endfor %}
+    </div>
+
+    {% for section in sections %}
+        <div id="{{ section.id }}" class="w3-card w3-white tab w3-padding-large" style="display:none">
+            {% for formation in section.formations %}
+                <div class="w3-card-4 w3-padding w3-white w3-row">
+                    <div class="w3-container w3-third">
+                        <h3><b>{{ formation.title }}</b></h3>
+                        <h5><span class="w3-opacity">Posté le {{ formation.date_posted }}</span></h5>
+                        <p><b>Description : </b>{{ formation.description }}</p>
+                    </div>
+
+                    <div class="w3-container w3-twothird">
+                        <video class="w3-padding" width="100%" height="auto" controls>
+                              <source src="{{ formation.video.url }}" type="video/mp4">
+                                Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+
+
+
+
+
+{% endblock content %}

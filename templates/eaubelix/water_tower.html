@@ -1,0 +1,262 @@
+{% extends  "eaubelix/eaubelix_base.html" %}
+{% load auth_extras %}
+{% block content_eaubelix %}
+
+    <div class="w3-bar w3-xlarge">
+        {% for water_tower in water_towers %}
+            <button class="w3-bar-item w3-button gris_clair_curatio w3-hover-white tablink"
+                    onclick="openTab(event, '{{ water_tower.id }}', 'tab', 'tablink', 'w3-white')"><span
+                    class="w3-medium">{{ water_tower.name }}</span></button>
+        {% endfor %}
+    </div>
+
+    {% for water_tower in water_towers %}
+        <div id="{{ water_tower.id }}" class="w3-card w3-white tab w3-padding-large" style="display:none">
+            <button class="w3-bar-item w3-button w3-round w3-hover-none innertablink"
+                    onclick='openTab(event, "data_{{ water_tower.id }}", "innertab", "innertablink", "bg_bleu_pale_curatio")'>
+                <span class="w3-medium">Données</span></button>
+            <button class="w3-bar-item w3-button w3-round w3-hover-none innertablink"
+                    onclick='openTab(event, "charts_diagrams_{{ water_tower.id }}", "innertab", "innertablink", "bg_bleu_pale_curatio")'>
+                <span class="w3-medium">Chartes et Schémas</span></button>
+            <!--- Charts and Diagrams -->
+            <div id="charts_diagrams_{{ water_tower.id }}" class="innertab" style="display:none">
+                <h2>Charte de contrôle</h2>
+                <img src="#" alt="control_chart" style="width:auto;">
+                <h2>Schéma d’écoulement</h2>
+                <img src="#" alt="flow_diagram" style="width:auto;">
+            </div>
+            <!--- Data -->
+            <div id="data_{{ water_tower.id }}" class="innertab w3-margin-top" style="display:none">
+                <table class="datatable display w3-responsive nowrap" style="width:100%">
+                    <thead>
+                    <tr>
+                        <th class="reorder" rowspan="3">Date</th>
+                        <th rowspan="3">Opérateur</th>
+                        <th>Limites</th>
+                        <th {% if "Dipslide" not in water_tower.water_tower_data_shown %} class="hidden" {% endif %}>Dipslide</th>
+                        <th {% if "inhibitor" not in water_tower.water_tower_data_shown %} class="hidden" {% endif %}>Inhibiteur</th>
+                        <th {% if "cond" not in water_tower.water_tower_data_shown %} class="hidden" {% endif %}>Cond</th>
+                        <th {% if "orp" not in water_tower.water_tower_data_shown %} class="hidden" {% endif %}>ORP</th>
+                        <th {% if "cl2_libre" not in water_tower.water_tower_data_shown %} class="hidden" {% endif %}>CL2 Libre</th>
+                        <th {% if "atp_l" not in water_tower.water_tower_data_shown %} class="hidden" {% endif %}>ATP L</th>
+                        <th {% if "atp_t" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>ATP T</th>
+                        <th {% if "atp" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>ATP</th>
+                        <th {% if "iron" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>Fer</th>
+                        <th {% if "copper" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>Cuivre</th>
+                        <th {% if "p" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>P</th>
+                        <th {% if "m" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>M </th>
+                        <th {% if "cl" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>Cl-</th>
+                        <th {% if "appoint" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>Appoint</th>
+                        <th {% if "purge" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>Purge</th>
+                        <th {% if "cycle" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>Cycle</th>
+                        <th {% if "dt" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>DT</th>
+                        <th {% if "ca" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>Ca</th>
+                        <th {% if "ph" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>pH</th>
+                        <th {% if "bw" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>BW</th>
+                        <th {% if "p1" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>P1</th>
+                        <th {% if "p2" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>P2</th>
+                        <th {% if "p3" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>P3</th>
+                        <th {% if "p4" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>P4</th>
+                    </tr>
+                    <tr>
+                        <td>MIN</td>
+                        <td {% if "Dipslide" not in water_tower.water_tower_data_shown %} class="hidden" {% endif %}>
+                            {{ water_tower.min_max.Dipslide_min }}</td>
+                        <td {% if "inhibitor" not in water_tower.water_tower_data_shown %} class="hidden" {% endif %}>
+                            {{ water_tower.min_max.inhibitor_min }}</td>
+                        <td {% if "cond" not in water_tower.water_tower_data_shown %} class="hidden" {% endif %}>
+                            {{ water_tower.min_max.cond_min }}</td>
+                        <td {% if "orp" not in water_tower.water_tower_data_shown %} class="hidden" {% endif %}>
+                            {{ water_tower.min_max.orp_min }}</td>
+                        <td {% if "cl2_libre" not in water_tower.water_tower_data_shown %} class="hidden" {% endif %}>
+                            {{ water_tower.min_max.cl2_libre_min }}</td>
+                        <td {% if "atp_l" not in water_tower.water_tower_data_shown %} class="hidden" {% endif %}>
+                            {{ water_tower.min_max.atp_l_min }}</td>
+                        <td {% if "atp_t" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>
+                            {{ water_tower.min_max.atp_t_min }}</td>
+                        <td {% if "atp" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>
+                            {{ water_tower.min_max.atp_min }}</td>
+                        <td {% if "iron" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>
+                            {{ water_tower.min_max.iron_min }}</td>
+                        <td {% if "copper" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>
+                            {{ water_tower.min_max.copper_min }}</td>
+                        <td {% if "p" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>
+                            {{ water_tower.min_max.p_min }}</td>
+                        <td {% if "m" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>
+                            {{ water_tower.min_max.m_min }}</td>
+                        <td {% if "cl" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>
+                            {{ water_tower.min_max.cl_min }}</td>
+                        <td {% if "appoint" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>
+                            {{ water_tower.min_max.appoint_min }}</td>
+                        <td {% if "purge" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>
+                            {{ water_tower.min_max.purge_min }}</td>
+                        <td {% if "cycle" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>
+                            {{ water_tower.min_max.cycle_min }}</td>
+                        <td {% if "dt" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>
+                            {{ water_tower.min_max.dt_min }}</td>
+                        <td {% if "ca" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>
+                            {{ water_tower.min_max.ca_min }}</td>
+                        <td {% if "ph" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>
+                            {{ water_tower.min_max.ph_min }}</td>
+                        <td {% if "bw" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>
+                            {{ water_tower.min_max.bw_min }}</td>
+                        <td {% if "p1" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>
+                            {{ water_tower.min_max.p1_min }}</td>
+                        <td {% if "p2" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>
+                            {{ water_tower.min_max.p2_min }}</td>
+                        <td {% if "p3" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>
+                            {{ water_tower.min_max.p3_min }}</td>
+                        <td {% if "p4" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>
+                            {{ water_tower.min_max.p4_min }}</td>
+                    </tr>
+                    <tr>
+                        <td>MAX</td>
+                        <td {% if "Dipslide" not in water_tower.water_tower_data_shown %} class="hidden" {% endif %}>
+                            {{ water_tower.min_max.Dipslide_max }}</td>
+                        <td {% if "inhibitor" not in water_tower.water_tower_data_shown %} class="hidden" {% endif %}>
+                            {{ water_tower.min_max.inhibitor_max }}</td>
+                        <td {% if "cond" not in water_tower.water_tower_data_shown %} class="hidden" {% endif %}>
+                            {{ water_tower.min_max.cond_max }}</td>
+                        <td {% if "orp" not in water_tower.water_tower_data_shown %} class="hidden" {% endif %}>
+                            {{ water_tower.min_max.orp_max }}</td>
+                        <td {% if "cl2_libre" not in water_tower.water_tower_data_shown %} class="hidden" {% endif %}>
+                            {{ water_tower.min_max.cl2_libre_max }}</td>
+                        <td {% if "atp_l" not in water_tower.water_tower_data_shown %} class="hidden" {% endif %}>
+                            {{ water_tower.min_max.atp_l_max }}</td>
+                        <td {% if "atp_t" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>
+                            {{ water_tower.min_max.atp_t_max }}</td>
+                        <td {% if "atp" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>
+                            {{ water_tower.min_max.atp_max }}</td>
+                        <td {% if "iron" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>
+                            {{ water_tower.min_max.iron_max }}</td>
+                        <td {% if "copper" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>
+                            {{ water_tower.min_max.copper_max }}</td>
+                        <td {% if "p" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>
+                            {{ water_tower.min_max.p_max }}</td>
+                        <td {% if "m" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>
+                            {{ water_tower.min_max.m_max }}</td>
+                        <td {% if "cl" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>
+                            {{ water_tower.min_max.cl_max }}</td>
+                        <td {% if "appoint" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>
+                            {{ water_tower.min_max.appoint_max }}</td>
+                        <td {% if "purge" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>
+                            {{ water_tower.min_max.purge_max }}</td>
+                        <td {% if "cycle" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>
+                            {{ water_tower.min_max.cycle_max }}</td>
+                        <td {% if "dt" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>
+                            {{ water_tower.min_max.dt_max }}</td>
+                        <td {% if "ca" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>
+                            {{ water_tower.min_max.ca_max }}</td>
+                        <td {% if "ph" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>
+                            {{ water_tower.min_max.ph_max }}</td>
+                        <td {% if "bw" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>
+                            {{ water_tower.min_max.bw_max }}</td>
+                        <td {% if "p1" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>
+                            {{ water_tower.min_max.p1_max }}</td>
+                        <td {% if "p2" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>
+                            {{ water_tower.min_max.p2_max }}</td>
+                        <td {% if "p3" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>
+                            {{ water_tower.min_max.p3_max }}</td>
+                        <td {% if "p4" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>
+                            {{ water_tower.min_max.p4_max }}</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for water_tower_data in water_tower.water_tower_data.all %}
+                        <tr>
+                            <td>{{ water_tower_data.date }}</td>
+                            <td>{{ water_tower_data.operator.username }}</td>
+                            <td></td>
+                            <td {% if "Dipslide" not in water_tower.water_tower_data_shown %} class="hidden" {% endif %}>
+                                &nbsp;&nbsp;{{ water_tower_data.Dipslide }}</td>
+                            <td {% if "inhibitor" not in water_tower.water_tower_data_shown %} class="hidden" {% endif %}>
+                                &nbsp;&nbsp;{{ water_tower_data.inhibitor }}</td>
+                            <td {% if "cond" not in water_tower.water_tower_data_shown %} class="hidden" {% endif %}>
+                                &nbsp;&nbsp;{{ water_tower_data.cond }}</td>
+                            <td {% if "orp" not in water_tower.water_tower_data_shown %} class="hidden" {% endif %}>
+                                &nbsp;&nbsp;{{ water_tower_data.orp }}</td>
+                            <td {% if "cl2_libre" not in water_tower.water_tower_data_shown %} class="hidden" {% endif %}>
+                                &nbsp;&nbsp;{{ water_tower_data.cl2_libre }}</td>
+                            <td {% if "atp_l" not in water_tower.water_tower_data_shown %} class="hidden" {% endif %}>
+                                &nbsp;&nbsp;{{ water_tower_data.atp_l }}</td>
+                            <td {% if "atp_t" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>
+                                &nbsp;&nbsp;{{ water_tower_data.atp_t }}</td>
+                            <td {% if "atp" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>
+                                &nbsp;&nbsp;{{ water_tower_data.atp }}</td>
+                            <td {% if "iron" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>
+                                &nbsp;&nbsp;{{ water_tower_data.iron }}</td>
+                            <td {% if "copper" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>
+                                &nbsp;&nbsp;{{ water_tower_data.copper }}</td>
+                            <td {% if "p" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>
+                                &nbsp;&nbsp;{{ water_tower_data.p }}</td>
+                            <td {% if "m" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>
+                                &nbsp;&nbsp;{{ water_tower_data.m }}</td>
+                            <td {% if "cl" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>
+                                &nbsp;&nbsp;{{ water_tower_data.cl }}</td>
+                            <td {% if "appoint" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>
+                                &nbsp;&nbsp;{{ water_tower_data.appoint }}</td>
+                            <td {% if "purge" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>
+                                &nbsp;&nbsp;{{ water_tower_data.purge }}</td>
+                            <td {% if "cycle" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>
+                                &nbsp;&nbsp;{{ water_tower_data.cycle }}</td>
+                            <td {% if "dt" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>
+                                &nbsp;&nbsp;{{ water_tower_data.dt }}</td>
+                            <td {% if "ca" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>
+                                &nbsp;&nbsp;{{ water_tower_data.ca }}</td>
+                            <td {% if "ph" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>
+                                &nbsp;&nbsp;{{ water_tower_data.ph }}</td>
+                            <td {% if "bw" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>
+                                &nbsp;&nbsp;{{ water_tower_data.bw }}</td>
+                            <td {% if "p1" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>
+                                &nbsp;&nbsp;{{ water_tower_data.p1 }}</td>
+                            <td {% if "p2" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>
+                                &nbsp;&nbsp;{{ water_tower_data.p2 }}</td>
+                            <td {% if "p3" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>
+                                &nbsp;&nbsp;{{ water_tower_data.p3 }}</td>
+                            <td {% if "p4" not in water_tower.water_tower_data_shown %} class="hidden"{% endif %}>
+                                &nbsp;&nbsp;{{ water_tower_data.p4 }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+
+                </table>
+
+                <button class="w3-btn bg_bleu_flash_curatio"
+                        onclick="document.getElementById('data_add_{{ water_tower.id }}').style.display='block'"><span
+                        class="w3-medium">Ajouter une entrée</span></button>
+            </div>
+
+            <div id="data_add_{{ water_tower.id }}" class="w3-modal" style="display:none">
+                <div class="w3-modal-content">
+                    <div class="w3-container w3-padding-32">
+                        <span onclick="document.getElementById('data_add_{{ water_tower.id }}').style.display='none'"
+                              class="w3-button w3-display-topright w3-text-large w3-red">&times;</span>
+                        <form enctype="multipart/form-data" method="POST" action="{% url 'add_water_tower_data' %}">
+                            {% csrf_token %}
+
+                            {% for field in form %}
+                                {% if field.label == 'Water tower'%}
+                                    <select name="water_tower" required id="id_water_tower" style="display: none">
+                                        <option value="{{ water_tower.id }}" selected>{{ water_tower.name }}</option>
+                                    </select>
+                                {% elif field.label == 'Operator' %}
+                                    <select name="operator" required id="id_water_tower" style="display: none">
+                                        <option value="{{ user.id }}" selected>{{ user.username }}</option>
+                                    </select>
+                                {% elif field.name in water_tower.water_tower_data_shown %}
+                                    {{ field.label }}
+                                    {{ field }}
+                                {% endif %}
+
+                            {% endfor %}
+                            <input class="w3-margin" type="submit" value="Ajouter"/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    {% endfor %}
+
+{% endblock content_eaubelix %}

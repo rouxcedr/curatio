@@ -1,0 +1,141 @@
+{% extends  "eaubelix/eaubelix_base.html" %}
+{% load auth_extras %}
+{% block content_eaubelix %}
+
+    <div class="w3-bar w3-xlarge">
+        {% for boiler in boilers %}
+            <button class="w3-bar-item w3-button gris_clair_curatio w3-hover-white tablink"
+                    onclick="openTab(event, '{{ boiler.id }}', 'tab', 'tablink', 'w3-white')"><span
+                    class="w3-medium">{{ boiler.name }}</span></button>
+        {% endfor %}
+    </div>
+
+    {% for boiler in boilers %}
+        <div id="{{ boiler.id }}" class="w3-card w3-white tab w3-padding-large" style="display:none">
+            <button class="w3-bar-item w3-button w3-round w3-hover-none innertablink"
+                    onclick='openTab(event, "data_{{ boiler.id }}", "innertab", "innertablink", "bg_bleu_pale_curatio")'>
+                <span class="w3-medium">Données</span></button>
+            <button class="w3-bar-item w3-button w3-round w3-hover-none innertablink"
+                    onclick='openTab(event, "charts_diagrams_{{ boiler.id }}", "innertab", "innertablink", "bg_bleu_pale_curatio")'>
+                <span class="w3-medium">Chartes et Schémas</span></button>
+            <!--- Charts and Diagrams -->
+            <div id="charts_diagrams_{{ boiler.id }}" class="innertab" style="display:none">
+                <h2>Charte de contrôle</h2>
+                <img src="#" alt="control_chart" style="width:auto;">
+                <h2>Schéma d’écoulement</h2>
+                <img src="#" alt="flow_diagram" style="width:auto;">
+            </div>
+            <!--- Data -->
+            <div id="data_{{ boiler.id }}" class="innertab w3-margin-top" style="display:none">
+                <table class="datatable display w3-responsive nowrap" style="width:100%">
+                    <thead>
+                    <tr>
+                        <th class="reorder" rowspan="3">Date</th>
+                        <th rowspan="3">Opérateur</th>
+                        <th>Limites</th>
+                        <th {% if "inhibitor" not in boiler.boiler_data_shown %} class="hidden" {% endif %}>Inhibiteur</th>
+                        <th {% if "p" not in boiler.boiler_data_shown %} class="hidden" {% endif %}>P</th>
+                        <th {% if "m" not in boiler.boiler_data_shown %} class="hidden" {% endif %}>M</th>
+                        <th {% if "oh" not in boiler.boiler_data_shown %} class="hidden" {% endif %}>OH</th>
+                        <th {% if "cl" not in boiler.boiler_data_shown %} class="hidden" {% endif %}>Cl-</th>
+                        <th {% if "so3" not in boiler.boiler_data_shown %} class="hidden" {% endif %}>SO3</th>
+                        <th {% if "cond" not in boiler.boiler_data_shown %} class="hidden"{% endif %}>Cond</th>
+                        <th {% if "pointeaux" not in boiler.boiler_data_shown %} class="hidden"{% endif %}>Pointeaux</th>
+                        <th {% if "mbd" not in boiler.boiler_data_shown %} class="hidden"{% endif %}>MBD(s)</th>
+                        <th {% if "on_off" not in boiler.boiler_data_shown %} class="hidden"{% endif %}>On/Off</th>
+                        <th {% if "vapor_pound_kg" not in boiler.boiler_data_shown %} class="hidden"{% endif %}>Vapeur (lbs/kg)</th>
+                        <th {% if "vaper_cond" not in boiler.boiler_data_shown %} class="hidden"{% endif %}>Vapeur (Cond)</th>
+                    </tr>
+                    <tr>
+                        <td>MIN</td>
+                        <td {% if "inhibitor" not in boiler.boiler_data_shown %} class="hidden"{% endif %}>{{ boiler.min_max.inhibitor_min }}</td>
+                        <td {% if "p" not in boiler.boiler_data_shown %} class="hidden"{% endif %}>{{ boiler.min_max.p_min }}</td>
+                        <td {% if "m" not in boiler.boiler_data_shown %} class="hidden"{% endif %}>{{ boiler.min_max.m_min }}</td>
+                        <td {% if "oh" not in boiler.boiler_data_shown %} class="hidden"{% endif %}>{{ boiler.min_max.oh_min }}</td>
+                        <td {% if "cl" not in boiler.boiler_data_shown %} class="hidden"{% endif %}>{{ boiler.min_max.cl_min }}</td>
+                        <td {% if "so3" not in boiler.boiler_data_shown %} class="hidden"{% endif %}>{{ boiler.min_max.so3_min }}</td>
+                        <td {% if "cond" not in boiler.boiler_data_shown %} class="hidden"{% endif %}>{{ boiler.min_max.cond_min }}</td>
+                        <td {% if "pointeaux" not in boiler.boiler_data_shown %} class="hidden"{% endif %}>{{ boiler.min_max.pointeaux_min }}</td>
+                        <td {% if "mbd" not in boiler.boiler_data_shown %} class="hidden"{% endif %}>{{ boiler.min_max.mbd_min }}</td>
+                        <td {% if "on_off" not in boiler.boiler_data_shown %} class="hidden"{% endif %}>{% if boiler.min_max.on_off_min %} ON {% else %} OFF {% endif %}</td>
+                        <td {% if "vapor_pound_kg" not in boiler.boiler_data_shown %} class="hidden"{% endif %}>{{ boiler.min_max.vapor_pound_kg_min }}</td>
+                        <td {% if "vaper_cond" not in boiler.boiler_data_shown %} class="hidden"{% endif %}>{{ boiler.min_max.vaper_cond_min }}</td>
+                    </tr>
+                    <tr>
+                        <td>MAX</td>
+                        <td {% if "inhibitor" not in boiler.boiler_data_shown %} class="hidden"{% endif %}>{{ boiler.min_max.inhibitor_max }}</td>
+                        <td {% if "p" not in boiler.boiler_data_shown %} class="hidden"{% endif %}>{{ boiler.min_max.p_max }}</td>
+                        <td {% if "m" not in boiler.boiler_data_shown %} class="hidden"{% endif %}>{{ boiler.min_max.m_max }}</td>
+                        <td {% if "oh" not in boiler.boiler_data_shown %} class="hidden"{% endif %}>{{ boiler.min_max.oh_max }}</td>
+                        <td {% if "cl" not in boiler.boiler_data_shown %} class="hidden"{% endif %}>{{ boiler.min_max.cl_max }}</td>
+                        <td {% if "so3" not in boiler.boiler_data_shown %} class="hidden"{% endif %}>{{ boiler.min_max.so3_max }}</td>
+                        <td {% if "cond" not in boiler.boiler_data_shown %} class="hidden"{% endif %}>{{ boiler.min_max.cond_max }}</td>
+                        <td {% if "pointeaux" not in boiler.boiler_data_shown %} class="hidden"{% endif %}>{{ boiler.min_max.pointeaux_max }}</td>
+                        <td {% if "mbd" not in boiler.boiler_data_shown %} class="hidden"{% endif %}>{{ boiler.min_max.mbd_max }}</td>
+                        <td {% if "on_off" not in boiler.boiler_data_shown %} class="hidden"{% endif %}>{% if boiler.min_max.on_off_max %} ON {% else %} OFF {% endif %}</td>
+                        <td {% if "vapor_pound_kg" not in boiler.boiler_data_shown %} class="hidden"{% endif %}>{{ boiler.min_max.vapor_pound_kg_max }}</td>
+                        <td {% if "vaper_cond" not in boiler.boiler_data_shown %} class="hidden"{% endif %}>{{ boiler.min_max.vaper_cond_max }}</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for boiler_data in boiler.boiler_data.all %}
+                        <tr>
+                            <td>{{ boiler_data.date }}</td>
+                            <td>{{ boiler_data.operator.username }}</td>
+                            <td></td>
+                            <td {% if "inhibitor" in boiler.boiler_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ boiler_data.inhibitor }}</td>
+                            <td {% if "p" in boiler.boiler_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ boiler_data.p }}</td>
+                            <td {% if "m" in boiler.boiler_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ boiler_data.m }}</td>
+                            <td {% if "oh" in boiler.boiler_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ boiler_data.oh }}</td>
+                            <td {% if "cl" in boiler.boiler_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ boiler_data.cl }}</td>
+                            <td {% if "so3" in boiler.boiler_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ boiler_data.so3 }}</td>
+                            <td {% if "cond" in boiler.boiler_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ boiler_data.cond }}</td>
+                            <td {% if "pointeaux" in boiler.boiler_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ boiler_data.pointeaux }}</td>
+                            <td {% if "mbd" in boiler.boiler_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ boiler_data.mbd }}</td>
+                            <td {% if "on_off" in boiler.boiler_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ boiler_data.on_off }}</td>
+                            <td {% if "vapor_pound_kg" in boiler.boiler_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ boiler_data.vapor_pound_kg }}</td>
+                            <td {% if "vaper_cond" in boiler.boiler_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ boiler_data.vaper_cond }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+
+                </table>
+
+                <button class="w3-btn bg_bleu_flash_curatio"
+                        onclick="document.getElementById('data_add_{{ boiler.id }}').style.display='block'"><span
+                        class="w3-medium">Ajouter une entrée</span></button>
+            </div>
+
+            <div id="data_add_{{ boiler.id }}" class="w3-modal" style="display:none">
+                <div class="w3-modal-content">
+                    <div class="w3-container w3-padding-32">
+                        <span onclick="document.getElementById('data_add_{{ boiler.id }}').style.display='none'"
+                              class="w3-button w3-display-topright w3-text-large w3-red">&times;</span>
+                        <form enctype="multipart/form-data" method="POST" action="{% url 'add_boiler_data' %}">
+                            {% csrf_token %}
+                            {% for field in form %}
+                                {% if field.label == 'Boiler'%}
+                                    <select name="boiler" required id="id_boiler" style="display: none">
+                                        <option value="{{ boiler.id }}" selected>{{ boiler.name }}</option>
+                                    </select>
+                                {% elif field.label == 'Operator' %}
+                                    <select name="operator" required id="id_boiler" style="display: none">
+                                        <option value="{{ user.id }}" selected>{{ user.username }}</option>
+                                    </select>
+                                {% elif field.name in boiler.boiler_data_shown %}
+                                    {{ field.label }}
+                                    {{ field }}
+                                {% endif %}
+
+                            {% endfor %}
+                            <input class="w3-margin" type="submit" value="Ajouter"/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    {% endfor %}
+
+{% endblock content_eaubelix %}

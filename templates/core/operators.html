@@ -1,0 +1,45 @@
+{% extends  "core/base.html" %}
+{% load auth_extras %}
+{% block content %}
+
+    <div class="w3-white w3-padding">
+            <h2>Liste des Opérateurs</h2>
+            <ul class="w3-ul w3-card">
+            {% for operator in operators %}
+
+
+
+                    <li class="w3-bar">
+                        <a  onclick="return confirm('Ete vous sûr de vouloir supprimer l\'opérateur {{ operator.username }}');"
+                                href="{% url 'delete_operator' operator.id %}"
+                              class="w3-bar-item w3-button w3-white w3-xlarge w3-hover-red w3-right"> x </a>
+                        <div class="w3-bar-item">
+                            <span class="w3-large w3-padding-top">{{ operator.username }}</span> <br>
+                            <span>Opérateur</span>
+                        </div>
+                    </li>
+            {% endfor %}
+            </ul>
+
+    </div>
+
+
+    <div class="w3-white w3-padding w3-small">
+        <h5>Ajouter un opérateur</h5>
+        {% if error %}
+            <p class="w3-text-red"><b>{{ error }}</b></p>
+        {% endif %}
+        <form method="POST">
+            {% csrf_token %}
+            <label>Nom d'utilisateur</label>
+            <input class="w3-input w3-border w3-border-black w3-round" type="text"
+                   placeholder="Nom d'utilisateur"
+                   name="username" required>
+            <p class="w3-text-red"> Le mot de passe sera pareil que le nom d'utilisateur, l'opérateur devra le changer
+                par la suite </p>
+            <button type="submit" class="w3-button w3-round bg_bleu_flash_curatio">Créer</button>
+        </form>
+
+    </div>
+
+{% endblock content %}
