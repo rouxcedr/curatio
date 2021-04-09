@@ -329,12 +329,12 @@ class ClosedNetwork(models.Model):
         p = "p", "P"
         m = "m", "M"
         dt = "dt", "DT"
-        iron = "iron", "Iron"
+        iron = "iron", "Fer"
         copper = "copper", "Cuivre"
         turb = "turb", "Turb"
         coul = "coul", "Coul"
         filter = "filter", "Filtre"
-        quantity = "quantity", "Pointeaux"
+        quantity = "quantity", "Quantité"
         appoint = "appoint", "Appoint"
 
     closed_network_data_shown = ArrayField(

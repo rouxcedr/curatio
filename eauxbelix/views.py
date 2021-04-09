@@ -58,9 +58,7 @@ def water_tower(request):
         client = request.user.operatormore.client
     else:
         client = request.user
-    # water_tower_data = ()
-    # for water_tower in client.watertower_set.all():
-    #     water_tower_data += (water_tower.name, [water_tower.water_tower_data.values(fieldname) for fieldname in water_tower.water_tower_data_shown])
+
     context = {'water_towers': client.watertower_set.all(), 'form': WaterTowerDataForm()}
     return render(request, 'eaubelix/water_tower.html', context)
 
@@ -77,5 +75,17 @@ def add_water_tower_data(request):
 @login_required
 @allowed_users(allowed_roles=['EAUBELIX'])
 def closed_networks(request):
-    context = {}
+    if request.user.type == User.Types.OPERATOR:
+        client = request.user.operatormore.client
+    else:
+        client = request.user
+
+    context = {'closed_networks': client.closednetwork_set.all(), 'form': ClosedNetworkDataForm()}
     return render(request, 'eaubelix/closed_networks.html', context)
+
+def add_closed_network_data(request):
+    if request.method == 'POST':
+        form = ClosedNetworkDataForm(request.POST or None, request.FILES or None)
+        if form.is_valid():
+            form.save()
+        return redirect('closed_networks')

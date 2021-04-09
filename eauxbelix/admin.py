@@ -9,6 +9,9 @@ class BoilerFormAdmin(admin.ModelAdmin):
 class WaterTowerFormAdmin(admin.ModelAdmin):
     form = WaterTowerForm
 
+class ClosedNetworkFormAdmin(admin.ModelAdmin):
+    form = ClosedNetworkForm
+
 # Register your models here.
 admin.site.register(BoilerMinMax)
 admin.site.register(Boiler, BoilerFormAdmin)
@@ -19,5 +22,5 @@ admin.site.register(WaterTower, WaterTowerFormAdmin)
 admin.site.register(WaterTowerData)
 
 admin.site.register(ClosedNetworkMinMax)
-admin.site.register(ClosedNetwork, BoilerFormAdmin)
+admin.site.register(ClosedNetwork, ClosedNetworkFormAdmin)
 admin.site.register(ClosedNetworkData)

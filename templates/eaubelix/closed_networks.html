@@ -34,47 +34,49 @@
                         <th rowspan="3">Opérateur</th>
                         <th>Limites</th>
                         <th {% if "inhibitor" not in closed_network.closed_network_data_shown %} class="hidden" {% endif %}>Inhibiteur</th>
+                        <th {% if "cond" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>Cond</th>
+                        <th {% if "ph" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>pH</th>
                         <th {% if "p" not in closed_network.closed_network_data_shown %} class="hidden" {% endif %}>P</th>
                         <th {% if "m" not in closed_network.closed_network_data_shown %} class="hidden" {% endif %}>M</th>
-                        <th {% if "oh" not in closed_network.closed_network_data_shown %} class="hidden" {% endif %}>OH</th>
-                        <th {% if "cl" not in closed_network.closed_network_data_shown %} class="hidden" {% endif %}>Cl-</th>
-                        <th {% if "so3" not in closed_network.closed_network_data_shown %} class="hidden" {% endif %}>SO3</th>
-                        <th {% if "cond" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>Cond</th>
-                        <th {% if "pointeaux" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>Pointeaux</th>
-                        <th {% if "mbd" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>MBD(s)</th>
-                        <th {% if "on_off" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>On/Off</th>
-                        <th {% if "vapor_pound_kg" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>Vapeur (lbs/kg)</th>
-                        <th {% if "vaper_cond" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>Vapeur (Cond)</th>
+                        <th {% if "dt" not in closed_network.closed_network_data_shown %} class="hidden" {% endif %}>DT</th>
+                        <th {% if "iron" not in closed_network.closed_network_data_shown %} class="hidden" {% endif %}>Fer</th>
+                        <th {% if "copper" not in closed_network.closed_network_data_shown %} class="hidden" {% endif %}>Cuivre</th>
+                        <th {% if "turb" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>Coul</th>
+                        <th {% if "filter" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>Filtre</th>
+                        <th {% if "quantity" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>Quantité</th>
+                        <th {% if "appoint" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>Appoint</th>
                     </tr>
                     <tr>
                         <td>MIN</td>
                         <td {% if "inhibitor" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>{{ closed_network.min_max.inhibitor_min }}</td>
+                        <td {% if "cond" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>{{ closed_network.min_max.cond_min }}</td>
+                        <td {% if "ph" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>{{ closed_network.min_max.ph_min }}</td>
                         <td {% if "p" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>{{ closed_network.min_max.p_min }}</td>
                         <td {% if "m" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>{{ closed_network.min_max.m_min }}</td>
-                        <td {% if "oh" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>{{ closed_network.min_max.oh_min }}</td>
-                        <td {% if "cl" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>{{ closed_network.min_max.cl_min }}</td>
-                        <td {% if "so3" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>{{ closed_network.min_max.so3_min }}</td>
-                        <td {% if "cond" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>{{ closed_network.min_max.cond_min }}</td>
-                        <td {% if "pointeaux" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>{{ closed_network.min_max.pointeaux_min }}</td>
-                        <td {% if "mbd" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>{{ closed_network.min_max.mbd_min }}</td>
-                        <td {% if "on_off" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>{% if closed_network.min_max.on_off_min %} ON {% else %} OFF {% endif %}</td>
-                        <td {% if "vapor_pound_kg" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>{{ closed_network.min_max.vapor_pound_kg_min }}</td>
-                        <td {% if "vaper_cond" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>{{ closed_network.min_max.vaper_cond_min }}</td>
+                        <td {% if "dt" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>{{ closed_network.min_max.dt_min }}</td>
+                        <td {% if "iron" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>{{ closed_network.min_max.iron_min }}</td>
+                        <td {% if "copper" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>{{ closed_network.min_max.copper_min }}</td>
+                        <td {% if "turb" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>{{ closed_network.min_max.turb_min }}</td>
+                        <td {% if "coul" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>{{ closed_network.min_max.coul_min }}</td>
+                        <td {% if "filter" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>{% if closed_network.min_max.filter_min %} ON {% else %} OFF {% endif %}</td>
+                        <td {% if "quantity" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>{{ closed_network.min_max.quantity_min }}</td>
+                        <td {% if "appoint" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>{{ closed_network.min_max.appoint_min }}</td>
                     </tr>
                     <tr>
                         <td>MAX</td>
                         <td {% if "inhibitor" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>{{ closed_network.min_max.inhibitor_max }}</td>
+                        <td {% if "cond" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>{{ closed_network.min_max.cond_max }}</td>
+                        <td {% if "ph" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>{{ closed_network.min_max.ph_max }}</td>
                         <td {% if "p" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>{{ closed_network.min_max.p_max }}</td>
                         <td {% if "m" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>{{ closed_network.min_max.m_max }}</td>
-                        <td {% if "oh" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>{{ closed_network.min_max.oh_max }}</td>
-                        <td {% if "cl" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>{{ closed_network.min_max.cl_max }}</td>
-                        <td {% if "so3" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>{{ closed_network.min_max.so3_max }}</td>
-                        <td {% if "cond" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>{{ closed_network.min_max.cond_max }}</td>
-                        <td {% if "pointeaux" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>{{ closed_network.min_max.pointeaux_max }}</td>
-                        <td {% if "mbd" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>{{ closed_network.min_max.mbd_max }}</td>
-                        <td {% if "on_off" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>{% if closed_network.min_max.on_off_max %} ON {% else %} OFF {% endif %}</td>
-                        <td {% if "vapor_pound_kg" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>{{ closed_network.min_max.vapor_pound_kg_max }}</td>
-                        <td {% if "vaper_cond" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>{{ closed_network.min_max.vaper_cond_max }}</td>
+                        <td {% if "dt" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>{{ closed_network.min_max.dt_max }}</td>
+                        <td {% if "iron" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>{{ closed_network.min_max.iron_max }}</td>
+                        <td {% if "copper" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>{{ closed_network.min_max.copper_max }}</td>
+                        <td {% if "turb" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>{{ closed_network.min_max.turb_max }}</td>
+                        <td {% if "coul" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>{{ closed_network.min_max.coul_max }}</td>
+                        <td {% if "filter" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>{% if closed_network.min_max.filter_max %} ON {% else %} OFF {% endif %}</td>
+                        <td {% if "quantity" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>{{ closed_network.min_max.quantity_max }}</td>
+                        <td {% if "appoint" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>{{ closed_network.min_max.appoint_max }}</td>
                     </tr>
                     </thead>
                     <tbody>
@@ -83,18 +85,19 @@
                             <td>{{ closed_network_data.date }}</td>
                             <td>{{ closed_network_data.operator.username }}</td>
                             <td></td>
-                            <td {% if "inhibitor" in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ closed_network_data.inhibitor }}</td>
-                            <td {% if "p" in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ closed_network_data.p }}</td>
-                            <td {% if "m" in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ closed_network_data.m }}</td>
-                            <td {% if "oh" in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ closed_network_data.oh }}</td>
-                            <td {% if "cl" in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ closed_network_data.cl }}</td>
-                            <td {% if "so3" in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ closed_network_data.so3 }}</td>
-                            <td {% if "cond" in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ closed_network_data.cond }}</td>
-                            <td {% if "pointeaux" in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ closed_network_data.pointeaux }}</td>
-                            <td {% if "mbd" in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ closed_network_data.mbd }}</td>
-                            <td {% if "on_off" in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ closed_network_data.on_off }}</td>
-                            <td {% if "vapor_pound_kg" in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ closed_network_data.vapor_pound_kg }}</td>
-                            <td {% if "vaper_cond" in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ closed_network_data.vaper_cond }}</td>
+                            <td {% if "inhibitor" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>{{ closed_network_data.inhibitor }}</td>
+                            <td {% if "cond" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>{{ closed_network_data.cond }}</td>
+                            <td {% if "ph" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>{{ closed_network_data.ph }}</td>
+                            <td {% if "p" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>{{ closed_network_data.p }}</td>
+                            <td {% if "m" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>{{ closed_network_data.m }}</td>
+                            <td {% if "dt" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>{{ closed_network_data.dt }}</td>
+                            <td {% if "iron" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>{{ closed_network_data.iron }}</td>
+                            <td {% if "copper" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>{{ closed_network_data.copper }}</td>
+                            <td {% if "turb" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>{{ closed_network_data.turb }}</td>
+                            <td {% if "coul" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>{{ closed_network_data.coul }}</td>
+                            <td {% if "filter" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>{% if closed_network_data.filter %} ON {% else %} OFF {% endif %}</td>
+                            <td {% if "quantity" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>{{ closed_network_data.quantity }}</td>
+                            <td {% if "appoint" not in closed_network.closed_network_data_shown %} class="hidden"{% endif %}>{{ closed_network_data.appoint }}</td>
                         </tr>
                     {% endfor %}
                     </tbody>
@@ -114,7 +117,7 @@
                         <form enctype="multipart/form-data" method="POST" action="{% url 'add_closed_network_data' %}">
                             {% csrf_token %}
                             {% for field in form %}
-                                {% if field.label == 'closed_network'%}
+                                {% if field.label == 'Closed network'%}
                                     <select name="closed_network" required id="id_closed_network" style="display: none">
                                         <option value="{{ closed_network.id }}" selected>{{ closed_network.name }}</option>
                                     </select>
