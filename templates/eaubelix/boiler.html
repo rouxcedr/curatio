@@ -4,7 +4,7 @@
 
     <div class="w3-bar w3-xlarge">
         {% for boiler in boilers %}
-            <button class="w3-bar-item w3-button gris_clair_curatio w3-hover-white tablink"
+            <button id="{{ boiler.id }}_button" class="w3-bar-item w3-button gris_clair_curatio w3-hover-white tablink"
                     onclick="openTab(event, '{{ boiler.id }}', 'tab', 'tablink', 'w3-white')"><span
                     class="w3-medium">{{ boiler.name }}</span></button>
         {% endfor %}
@@ -12,7 +12,7 @@
 
     {% for boiler in boilers %}
         <div id="{{ boiler.id }}" class="w3-card w3-white tab w3-padding-large" style="display:none">
-            <button class="w3-bar-item w3-button w3-round w3-hover-none innertablink"
+            <button id="{{ boiler.id }}_data_button" class="w3-bar-item w3-button w3-round w3-hover-none innertablink"
                     onclick='openTab(event, "data_{{ boiler.id }}", "innertab", "innertablink", "bg_bleu_pale_curatio")'>
                 <span class="w3-medium">Données</span></button>
             <button class="w3-bar-item w3-button w3-round w3-hover-none innertablink"

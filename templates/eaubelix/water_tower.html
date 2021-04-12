@@ -4,7 +4,7 @@
 
     <div class="w3-bar w3-xlarge">
         {% for water_tower in water_towers %}
-            <button class="w3-bar-item w3-button gris_clair_curatio w3-hover-white tablink"
+            <button id="{{ water_tower.id }}_button" class="w3-bar-item w3-button gris_clair_curatio w3-hover-white tablink"
                     onclick="openTab(event, '{{ water_tower.id }}', 'tab', 'tablink', 'w3-white')"><span
                     class="w3-medium">{{ water_tower.name }}</span></button>
         {% endfor %}
@@ -12,7 +12,7 @@
 
     {% for water_tower in water_towers %}
         <div id="{{ water_tower.id }}" class="w3-card w3-white tab w3-padding-large" style="display:none">
-            <button class="w3-bar-item w3-button w3-round w3-hover-none innertablink"
+            <button id="{{ water_tower.id }}_data_button" class="w3-bar-item w3-button w3-round w3-hover-none innertablink"
                     onclick='openTab(event, "data_{{ water_tower.id }}", "innertab", "innertablink", "bg_bleu_pale_curatio")'>
                 <span class="w3-medium">Données</span></button>
             <button class="w3-bar-item w3-button w3-round w3-hover-none innertablink"

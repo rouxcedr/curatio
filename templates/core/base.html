@@ -152,6 +152,16 @@
         datatable.columns('.hidden').visible(false);
     });
 
+    {% if display_element_by_id %}
+        $(document).ready(function () {
+            $('#{{ display_element_by_id }}_button').click();
+        });
+        $(document).ready(function () {
+            $('#{{ display_element_by_id }}_data_button').click();
+        });
+    {% endif %}
+
+
 </script>
 
 </body>

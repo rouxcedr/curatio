@@ -63,8 +63,8 @@ def boiler(request):
         client = request.user.operatormore.client
     else :
         client = request.user
-
-    context = {'boilers' : client.boiler_set.all().order_by('name'), 'form': BoilerDataForm(), "client" : client}
+    display_boiler_id = request.GET.get('boiler_id')
+    context = {'boilers' : client.boiler_set.all().order_by('name'), 'form': BoilerDataForm(), "client" : client, "display_element_by_id" : display_boiler_id}
     return render(request, 'eaubelix/boiler.html', context)
 
 @login_required
@@ -74,7 +74,10 @@ def add_boiler_data(request):
         form = BoilerDataForm(request.POST or None, request.FILES or None)
         if form.is_valid():
             form.save()
-        return redirect('boilers')
+        base_url = reverse("boilers")
+        param = "boiler_id=" + str(form.cleaned_data['boiler'].id)
+        url = '{}?{}'.format(base_url, param)
+        return redirect(url)
 
 
 @login_required
@@ -84,8 +87,8 @@ def water_tower(request):
         client = request.user.operatormore.client
     else:
         client = request.user
-
-    context = {'water_towers': client.watertower_set.all().order_by('name'), 'form': WaterTowerDataForm(), "client" : client}
+    display_water_tower_id = request.GET.get('water_tower_id')
+    context = {'water_towers': client.watertower_set.all().order_by('name'), 'form': WaterTowerDataForm(), "client" : client, "display_element_by_id" : display_water_tower_id}
     return render(request, 'eaubelix/water_tower.html', context)
 
 @login_required
@@ -95,7 +98,10 @@ def add_water_tower_data(request):
         form = WaterTowerDataForm(request.POST or None, request.FILES or None)
         if form.is_valid():
             form.save()
-        return redirect('water_towers')
+        base_url = reverse("water_towers")
+        param = "water_tower_id=" + str(form.cleaned_data['water_tower'].id)
+        url = '{}?{}'.format(base_url, param)
+        return redirect(url)
 
 
 @login_required
@@ -105,8 +111,8 @@ def closed_networks(request):
         client = request.user.operatormore.client
     else:
         client = request.user
-
-    context = {'closed_networks': client.closednetwork_set.all().order_by('name'), 'form': ClosedNetworkDataForm(), "client" : client}
+    display_closed_network_id = request.GET.get('closed_network_id')
+    context = {'closed_networks': client.closednetwork_set.all().order_by('name'), 'form': ClosedNetworkDataForm(), "client" : client, "display_element_by_id" : display_closed_network_id}
     return render(request, 'eaubelix/closed_networks.html', context)
 
 @login_required
@@ -116,4 +122,7 @@ def add_closed_network_data(request):
         form = ClosedNetworkDataForm(request.POST or None, request.FILES or None)
         if form.is_valid():
             form.save()
-        return redirect('closed_networks')
+        base_url = reverse("closed_networks")
+        param = "closed_network_id=" + str(form.cleaned_data['closed_network'].id)
+        url = '{}?{}'.format(base_url, param)
+        return redirect(url)
