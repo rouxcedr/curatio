@@ -11,20 +11,40 @@ from .forms import *
 @login_required
 @allowed_users(allowed_roles=['EAUBELIX'])
 def eaubelix(request):
-    context = {}
+    if request.user.type == User.Types.OPERATOR:
+        client = request.user.operatormore.client
+    else :
+        client = request.user
+    context = {"client" : client}
+    print(client.boiler_set.all().order_by('name'))
     return render(request, 'eaubelix/eaubelix_dashboard.html', context)
 
 @login_required
 @allowed_users(allowed_roles=['EAUBELIX'])
 def inventory(request):
-    context = {}
+    if request.user.type == User.Types.OPERATOR:
+        client = request.user.operatormore.client
+    else :
+        client = request.user
+
+    inventory_data_template = ()
+    inventories = client.inventory_set.all()
+    for inventory in inventories:
+        inventory_data = inventory.inventorydata_set.all().order_by("product__name")
+        
+
+    context = {"client" : client, "inventory_data" : inventory_data_template}
     return render(request, 'eaubelix/inventory.html', context)
 
 
 @login_required
 @allowed_users(allowed_roles=['EAUBELIX'])
 def pretreatment(request):
-    context = {}
+    if request.user.type == User.Types.OPERATOR:
+        client = request.user.operatormore.client
+    else :
+        client = request.user
+    context = {"client" : client}
     return render(request, 'eaubelix/pretreatment.html', context)
 
 
@@ -38,7 +58,7 @@ def boiler(request):
     # boiler_data = ()
     # for boiler in client.boiler_set.all():
     #     boiler_data += (boiler.name, [boiler.boiler_data.values(fieldname) for fieldname in boiler.boiler_data_shown])
-    context = {'boilers' : client.boiler_set.all(), 'form': BoilerDataForm()}
+    context = {'boilers' : client.boiler_set.all().order_by('name'), 'form': BoilerDataForm(), "client" : client}
     return render(request, 'eaubelix/boiler.html', context)
 
 @login_required
@@ -59,7 +79,7 @@ def water_tower(request):
     else:
         client = request.user
 
-    context = {'water_towers': client.watertower_set.all(), 'form': WaterTowerDataForm()}
+    context = {'water_towers': client.watertower_set.all().order_by('name'), 'form': WaterTowerDataForm(), "client" : client}
     return render(request, 'eaubelix/water_tower.html', context)
 
 @login_required
@@ -80,7 +100,7 @@ def closed_networks(request):
     else:
         client = request.user
 
-    context = {'closed_networks': client.closednetwork_set.all(), 'form': ClosedNetworkDataForm()}
+    context = {'closed_networks': client.closednetwork_set.all().order_by('name'), 'form': ClosedNetworkDataForm(), "client" : client}
     return render(request, 'eaubelix/closed_networks.html', context)
 
 def add_closed_network_data(request):

@@ -26,14 +26,25 @@
 {#            {% if request.user.type == "CLIENT" %}#}
 {#                <a href="{% url 'operators' %}" class="w3-bar-item w3-button w3-padding {% if "operators" in request.path %} bg_bleu_flash_curatio {% endif %}"><i class="fa fa-users"></i> Gestion des opérateurs </a>#}
 {#            {% endif %}#}
-            <a href="{% url 'inventory' %}" class="w3-bar-item w3-button w3-padding {% if "inventory" in request.path %} bg_bleu_flash_curatio {% endif %}"><i class="fa fa-boxes"></i>  Inventaire </a>
+            {% if client.inventory_set.all %}
+                <a href="{% url 'inventory' %}" class="w3-bar-item w3-button w3-padding {% if "inventory" in request.path %} bg_bleu_flash_curatio {% endif %}"><i class="fa fa-boxes"></i>  Inventaire </a>
+            {% endif %}
+
+            {% if client.pretreatment_set.all %}
             <a href="{% url 'pretreatment' %}" class="w3-bar-item w3-button w3-padding {% if "pretreatment" in request.path %} bg_bleu_flash_curatio {% endif %}"><i class="fa fa-clipboard"></i>  Prétraitement </a>
+            {% endif %}
+
+            {% if client.boiler_set.all %}
             <a href="{% url 'boilers' %}" class="w3-bar-item w3-button w3-padding {% if "boilers" in request.path %} bg_bleu_flash_curatio {% endif %}" ><i class="fa fa-tint"></i>  Chaudières </a>
+            {% endif %}
+
+            {% if client.watertower_set.all %}
             <a href="{% url 'water_towers' %}" class="w3-bar-item w3-button w3-padding {% if "water_towers" in request.path %} bg_bleu_flash_curatio {% endif %}"><i class="fa fa-tint"></i>  Tours d’eau </a>
+            {% endif %}
+
+            {% if client.closednetwork_set.all %}
             <a href="{% url 'closed_networks' %}" class="w3-bar-item w3-button w3-padding {% if "closed_networks" in request.path %} bg_bleu_flash_curatio {% endif %}"><i class="fa fa-project-diagram"></i>  Réseaux fermés </a>
-{#            <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bank fa-fw"></i>  General</a>#}
-{#            <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-history fa-fw"></i>  History</a>#}
-{#            <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-cog fa-fw"></i>  Settings</a><br><br>#}
+            {% endif %}
         </div>
     </nav>
 
