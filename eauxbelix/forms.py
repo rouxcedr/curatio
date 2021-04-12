@@ -204,3 +204,20 @@ class ClosedNetworkDataForm(forms.ModelForm):
         self.fields['filter'].label = "Filtre"
         self.fields['quantity'].label = "Quantité"
         self.fields['appoint'].label = "Appoint"
+
+
+
+class InventoryDataForm(forms.ModelForm):
+    class Meta:
+        model = InventoryData
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['product'].widget.attrs.update(
+            {'class': 'w3-input w3-border w3-round w3-border-black'})
+        self.fields['quantity'].widget.attrs.update(
+            {'class': 'w3-input w3-border w3-round w3-border-black'})
+
+        self.fields['product'].label = "Produit"
+        self.fields['quantity'].label = "Quantité"

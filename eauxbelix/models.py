@@ -4,17 +4,59 @@ from core.models import *
 
 # Create your models here.
 class Inventory(models.Model):
-    pass
+    name = models.CharField(max_length=100)
+    client = models.OneToOneField(Client, on_delete=models.SET_NULL, null=True)
 
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = "Inventory"
+        verbose_name = "Inventories"
+
+class Product(models.Model):
+    name = models.CharField(max_length=100)
+    code = models.CharField(max_length=100)
+    fonction = models.CharField(max_length=100)
+    format = models.CharField(max_length=100)
+    min = models.IntegerField(null=True, blank=True)
+    max = models.IntegerField(null=True, blank=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = "Product"
+        verbose_name = "Products"
 
 class InventoryData(models.Model):
-    pass
+    inventory = models.ForeignKey(Inventory, on_delete=models.CASCADE)
+    operator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    date = models.DateTimeField(auto_now_add=True, blank=True)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.IntegerField(null=True, blank=True)
 
+    def __str__(self):
+        return self.product.name + "_" + str(self.date)
+        # return self.inventory.name + "_" + str(self.date)
+
+    class Meta:
+        verbose_name_plural = "Inventory Data"
+        verbose_name = "Inventory Data"
 
 #------------------------------------- PRETREATMENT -------------------------------------#
 
 class Pretreatment(models.Model):
-    pass
+    name = models.CharField(max_length=100)
+    client = models.ForeignKey(Client, on_delete=models.CASCADE)
+    # min_max = models.ForeignKey(ClosedNetworkMinMax, on_delete=models.SET_NULL, null=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = "Pretreatment"
+        verbose_name = "Pretreatments"
 
 
 class PretreatmentData(models.Model):

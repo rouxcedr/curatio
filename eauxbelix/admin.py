@@ -24,3 +24,11 @@ admin.site.register(WaterTowerData)
 admin.site.register(ClosedNetworkMinMax)
 admin.site.register(ClosedNetwork, ClosedNetworkFormAdmin)
 admin.site.register(ClosedNetworkData)
+
+
+# admin.site.register(InventoryMinMax)
+admin.site.register(Inventory)
+admin.site.register(InventoryData)
+admin.site.register(Product)
+
+admin.site.register(Pretreatment)

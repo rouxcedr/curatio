@@ -4,7 +4,7 @@
 
     <div class="w3-bar w3-xlarge">
         {% for closed_network in closed_networks %}
-            <button class="w3-bar-item w3-button gris_clair_curatio w3-hover-white tablink"
+            <button id="{{ closed_network.id }}_button" class="w3-bar-item w3-button gris_clair_curatio w3-hover-white tablink"
                     onclick="openTab(event, '{{ closed_network.id }}', 'tab', 'tablink', 'w3-white')"><span
                     class="w3-medium">{{ closed_network.name }}</span></button>
         {% endfor %}
@@ -12,7 +12,7 @@
 
     {% for closed_network in closed_networks %}
         <div id="{{ closed_network.id }}" class="w3-card w3-white tab w3-padding-large" style="display:none">
-            <button class="w3-bar-item w3-button w3-round w3-hover-none innertablink"
+            <button id="{{ closed_network.id }}_data_button"  class="w3-bar-item w3-button w3-round w3-hover-none innertablink"
                     onclick='openTab(event, "data_{{ closed_network.id }}", "innertab", "innertablink", "bg_bleu_pale_curatio")'>
                 <span class="w3-medium">Données</span></button>
             <button class="w3-bar-item w3-button w3-round w3-hover-none innertablink"
