@@ -26,7 +26,7 @@
 {#            {% if request.user.type == "CLIENT" %}#}
 {#                <a href="{% url 'operators' %}" class="w3-bar-item w3-button w3-padding {% if "operators" in request.path %} bg_bleu_flash_curatio {% endif %}"><i class="fa fa-users"></i> Gestion des opérateurs </a>#}
 {#            {% endif %}#}
-            {% if client.inventory_set.all %}
+            {% if client.inventory %}
                 <a href="{% url 'inventory' %}" class="w3-bar-item w3-button w3-padding {% if "inventory" in request.path %} bg_bleu_flash_curatio {% endif %}"><i class="fa fa-boxes"></i>  Inventaire </a>
             {% endif %}
 

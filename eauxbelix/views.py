@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
+from collections import defaultdict
 
 from core.decorators import allowed_users
 from core.models import *
@@ -26,15 +27,22 @@ def inventory(request):
         client = request.user.operatormore.client
     else :
         client = request.user
-
-    inventory_data_template = ()
-    inventories = client.inventory_set.all()
-    for inventory in inventories:
-        inventory_data = inventory.inventorydata_set.all().order_by("product__name")
-        
-
-    context = {"client" : client, "inventory_data" : inventory_data_template}
+    inventory_data_template = defaultdict(list)
+    inventory_data = client.inventory.inventorydata_set.all().order_by("product__name", "-date")
+    for data in inventory_data:
+        inventory_data_template[data.product.name].append(data)
+    print(inventory_data_template)
+    context = {"client" : client, "inventory_data" : dict(inventory_data_template), "form" : InventoryDataForm()}
     return render(request, 'eaubelix/inventory.html', context)
+
+@login_required
+@allowed_users(allowed_roles=['EAUBELIX'])
+def add_inventory_data(request):
+    if request.method == 'POST':
+        form = InventoryDataForm(request.POST or None, request.FILES or None)
+        if form.is_valid():
+            form.save()
+        return redirect('inventory')
 
 
 @login_required
@@ -55,9 +63,7 @@ def boiler(request):
         client = request.user.operatormore.client
     else :
         client = request.user
-    # boiler_data = ()
-    # for boiler in client.boiler_set.all():
-    #     boiler_data += (boiler.name, [boiler.boiler_data.values(fieldname) for fieldname in boiler.boiler_data_shown])
+
     context = {'boilers' : client.boiler_set.all().order_by('name'), 'form': BoilerDataForm(), "client" : client}
     return render(request, 'eaubelix/boiler.html', context)
 
@@ -103,6 +109,8 @@ def closed_networks(request):
     context = {'closed_networks': client.closednetwork_set.all().order_by('name'), 'form': ClosedNetworkDataForm(), "client" : client}
     return render(request, 'eaubelix/closed_networks.html', context)
 
+@login_required
+@allowed_users(allowed_roles=['EAUBELIX'])
 def add_closed_network_data(request):
     if request.method == 'POST':
         form = ClosedNetworkDataForm(request.POST or None, request.FILES or None)

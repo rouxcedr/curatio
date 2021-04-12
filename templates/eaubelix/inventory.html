@@ -1,6 +1,67 @@
 {% extends  "eaubelix/eaubelix_base.html" %}
 {% load auth_extras %}
 {% block content_eaubelix %}
+    <div class="w3-card w3-white tab w3-padding-large" style="display:block">
+        <h1> Inventaire </h1>
+        <table class="datatable display w3-responsive nowrap" style="width:100%">
+            <thead>
+            <tr>
+                <th>À commander</th>
+                <th>Produit</th>
+                <th>Code</th>
+                <th>Fonction</th>
+                <th>Format</th>
+                <th>Min</th>
+                <th>Max</th>
+                <th>Quantité</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for product, data in inventory_data.items %}
+                <tr>
+                    {% if data.0.quantity < data.0.product.min %}
+                        <td> Oui</td>
+                    {% else %}
+                        <td> Non</td>
+                    {% endif %}
+                    <td>{{ data.0.product.name }}</td>
+                    <td>{{ data.0.product.code }}</td>
+                    <td>{{ data.0.product.fonction }}</td>
+                    <td>{{ data.0.product.format }}</td>
+                    <td>{{ data.0.product.min }}</td>
+                    <td>{{ data.0.product.max }}</td>
+                    <td>{{ data.0.quantity }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div class="w3-container w3-padding-32">
+                        <span onclick="document.getElementById('data_add_inventory').style.display='none'"
+                              class="w3-button w3-display-topright w3-text-large w3-red">&times;</span>
+            <form enctype="multipart/form-data" method="POST" action="{% url 'add_inventory_data' %}">
+                {% csrf_token %}
+                {% for field in form %}
+                    {% if field.label == 'Inventory' %}
+                        <select name="inventory" required="" id="id_inventory" style="display: none">
+                            <option value="{{ client.inventory.id }}">{{ client.inventory.name }}</option>
+                        </select>
+                    {% elif field.label == 'Operator' %}
+                        <select name="operator" required id="id_operator" style="display: none">
+                            <option value="{{ user.id }}" selected>{{ user.username }}</option>
+                        </select>
+                    {% else %}
+                        {{ field.label }}
+                        {{ field }}
+                    {% endif %}
+
+                {% endfor %}
+                <input class="w3-margin" type="submit" value="Ajouter"/>
+            </form>
+        </div>
+    </div>
+
+
+
 
 
 {% endblock content_eaubelix %}

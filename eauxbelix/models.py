@@ -5,7 +5,7 @@ from core.models import *
 # Create your models here.
 class Inventory(models.Model):
     name = models.CharField(max_length=100)
-    client = models.ForeignKey(Client, on_delete=models.CASCADE)
+    client = models.OneToOneField(Client, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return self.name
@@ -37,7 +37,7 @@ class InventoryData(models.Model):
     quantity = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
-        return self.product.name
+        return self.product.name + "_" + str(self.date)
         # return self.inventory.name + "_" + str(self.date)
 
     class Meta:
