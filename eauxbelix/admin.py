@@ -12,6 +12,9 @@ class WaterTowerFormAdmin(admin.ModelAdmin):
 class ClosedNetworkFormAdmin(admin.ModelAdmin):
     form = ClosedNetworkForm
 
+class PretreatmentFormAdmin(admin.ModelAdmin):
+    form = PretreatmentForm
+
 # Register your models here.
 admin.site.register(BoilerMinMax)
 admin.site.register(Boiler, BoilerFormAdmin)
@@ -31,4 +34,17 @@ admin.site.register(Inventory)
 admin.site.register(InventoryData)
 admin.site.register(Product)
 
-admin.site.register(Pretreatment)
+
+admin.site.register(SoftenerMinMax)
+admin.site.register(DealkalizerMinMax)
+admin.site.register(ReverseOsmosisMinMax)
+admin.site.register(DegasserMinMax)
+admin.site.register(MixMinMax)
+admin.site.register(CondensateMinMax)
+admin.site.register(Pretreatment, PretreatmentFormAdmin)
+admin.site.register(SoftenerData)
+admin.site.register(DealkalizerData)
+admin.site.register(ReverseOsmosisData)
+admin.site.register(DegasserData)
+admin.site.register(MixData)
+admin.site.register(CondensateData)

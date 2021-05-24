@@ -12,5 +12,11 @@ urlpatterns = [
     path('eaubelix/inventory', views.inventory, name='inventory'),
     path('eaubelix/add_inventory_data', views.add_inventory_data, name='add_inventory_data'),
     path('eaubelix/pretreatment', views.pretreatment, name='pretreatment'),
+    path('eaubelix/add_pretreatment_softener_data', views.add_pretreatment_softener_data, name='add_pretreatment_softener_data'),
+    path('eaubelix/add_pretreatment_dealkalizer_data', views.add_pretreatment_dealkalizer_data, name='add_pretreatment_dealkalizer_data'),
+    path('eaubelix/add_pretreatment_reverse_osmosis_data', views.add_pretreatment_reverse_osmosis_data, name='add_pretreatment_reverse_osmosis_data'),
+    path('eaubelix/add_pretreatment_degasser_data', views.add_pretreatment_degasser_data, name='add_pretreatment_degasser_data'),
+    path('eaubelix/add_pretreatment_mix_data', views.add_pretreatment_mix_data, name='add_pretreatment_mix_data'),
+    path('eaubelix/add_pretreatment_condensate_data', views.add_pretreatment_condensate_data, name='add_pretreatment_condensate_data'),
 
 ]

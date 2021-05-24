@@ -14,26 +14,27 @@ from .forms import *
 def eaubelix(request):
     if request.user.type == User.Types.OPERATOR:
         client = request.user.operatormore.client
-    else :
+    else:
         client = request.user
-    context = {"client" : client}
+    context = {"client": client}
     print(client.boiler_set.all().order_by('name'))
     return render(request, 'eaubelix/eaubelix_dashboard.html', context)
+
 
 @login_required
 @allowed_users(allowed_roles=['EAUBELIX'])
 def inventory(request):
     if request.user.type == User.Types.OPERATOR:
         client = request.user.operatormore.client
-    else :
+    else:
         client = request.user
     inventory_data_template = defaultdict(list)
     inventory_data = client.inventory.inventorydata_set.all().order_by("product__name", "-date")
     for data in inventory_data:
         inventory_data_template[data.product.name].append(data)
-    print(inventory_data_template)
-    context = {"client" : client, "inventory_data" : dict(inventory_data_template), "form" : InventoryDataForm()}
+    context = {"client": client, "inventory_data": dict(inventory_data_template), "form": InventoryDataForm()}
     return render(request, 'eaubelix/inventory.html', context)
+
 
 @login_required
 @allowed_users(allowed_roles=['EAUBELIX'])
@@ -50,10 +51,75 @@ def add_inventory_data(request):
 def pretreatment(request):
     if request.user.type == User.Types.OPERATOR:
         client = request.user.operatormore.client
-    else :
+    else:
         client = request.user
-    context = {"client" : client}
+    context = {'pretreatment': client.pretreatment,
+               'form_softener': SoftenerDataForm(),
+               'form_dealkalizer': DealkalizerDataForm,
+               'form_reverse_osmosis': ReverseOsmosisDataForm,
+               'form_degasser': DegasserDataForm,
+               'form_mix': MixDataForm,
+               'form_condensate': CondensateDataForm,
+               "client": client}
     return render(request, 'eaubelix/pretreatment.html', context)
+
+
+@login_required
+@allowed_users(allowed_roles=['EAUBELIX'])
+def add_pretreatment_softener_data(request):
+    if request.method == 'POST':
+        form = SoftenerDataForm(request.POST or None, request.FILES or None)
+        if form.is_valid():
+            form.save()
+        return redirect('pretreatment')
+
+@login_required
+@allowed_users(allowed_roles=['EAUBELIX'])
+def add_pretreatment_dealkalizer_data(request):
+    if request.method == 'POST':
+        form = DealkalizerDataForm(request.POST or None, request.FILES or None)
+        if form.is_valid():
+            form.save()
+        return redirect('pretreatment')
+
+@login_required
+@allowed_users(allowed_roles=['EAUBELIX'])
+def add_pretreatment_reverse_osmosis_data(request):
+    if request.method == 'POST':
+        form = ReverseOsmosisDataForm(request.POST or None, request.FILES or None)
+        if form.is_valid():
+            form.save()
+        return redirect('pretreatment')
+
+
+@login_required
+@allowed_users(allowed_roles=['EAUBELIX'])
+def add_pretreatment_degasser_data(request):
+    if request.method == 'POST':
+        form = DegasserDataForm(request.POST or None, request.FILES or None)
+        if form.is_valid():
+            form.save()
+        return redirect('pretreatment')
+
+
+@login_required
+@allowed_users(allowed_roles=['EAUBELIX'])
+def add_pretreatment_mix_data(request):
+    if request.method == 'POST':
+        form = MixDataForm(request.POST or None, request.FILES or None)
+        if form.is_valid():
+            form.save()
+        return redirect('pretreatment')
+
+
+@login_required
+@allowed_users(allowed_roles=['EAUBELIX'])
+def add_pretreatment_condensate_data(request):
+    if request.method == 'POST':
+        form = CondensateDataForm(request.POST or None, request.FILES or None)
+        if form.is_valid():
+            form.save()
+        return redirect('pretreatment')
 
 
 @login_required
@@ -61,11 +127,13 @@ def pretreatment(request):
 def boiler(request):
     if request.user.type == User.Types.OPERATOR:
         client = request.user.operatormore.client
-    else :
+    else:
         client = request.user
     display_boiler_id = request.GET.get('boiler_id')
-    context = {'boilers' : client.boiler_set.all().order_by('name'), 'form': BoilerDataForm(), "client" : client, "display_element_by_id" : display_boiler_id}
+    context = {'boilers': client.boiler_set.all().order_by('name'), 'form': BoilerDataForm(), "client": client,
+               "display_element_by_id": display_boiler_id}
     return render(request, 'eaubelix/boiler.html', context)
+
 
 @login_required
 @allowed_users(allowed_roles=['EAUBELIX'])
@@ -88,8 +156,10 @@ def water_tower(request):
     else:
         client = request.user
     display_water_tower_id = request.GET.get('water_tower_id')
-    context = {'water_towers': client.watertower_set.all().order_by('name'), 'form': WaterTowerDataForm(), "client" : client, "display_element_by_id" : display_water_tower_id}
+    context = {'water_towers': client.watertower_set.all().order_by('name'), 'form': WaterTowerDataForm(),
+               "client": client, "display_element_by_id": display_water_tower_id}
     return render(request, 'eaubelix/water_tower.html', context)
+
 
 @login_required
 @allowed_users(allowed_roles=['EAUBELIX'])
@@ -112,8 +182,10 @@ def closed_networks(request):
     else:
         client = request.user
     display_closed_network_id = request.GET.get('closed_network_id')
-    context = {'closed_networks': client.closednetwork_set.all().order_by('name'), 'form': ClosedNetworkDataForm(), "client" : client, "display_element_by_id" : display_closed_network_id}
+    context = {'closed_networks': client.closednetwork_set.all().order_by('name'), 'form': ClosedNetworkDataForm(),
+               "client": client, "display_element_by_id": display_closed_network_id}
     return render(request, 'eaubelix/closed_networks.html', context)
+
 
 @login_required
 @allowed_users(allowed_roles=['EAUBELIX'])
