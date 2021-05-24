@@ -12,9 +12,9 @@
 {##}
 {#    {% endif %}#}
 
-    <div class="w3-bar w3-xlarge">
+    <div class="w3-bar w3-xlarge bg_bleu_fonce_curatio w3-text-white">
         {% for section in sections %}
-            <button class="w3-bar-item w3-button gris_clair_curatio w3-hover-white tablink"
+            <button class="w3-bar-item w3-button w3-hover-white tablink"
                     onclick="openTab(event, '{{ section.id }}', 'tab', 'tablink', 'w3-white')"><span class="w3-medium">{{ section.name }}</span></button>
         {% endfor %}
     </div>
