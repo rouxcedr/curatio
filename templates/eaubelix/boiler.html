@@ -2,9 +2,9 @@
 {% load auth_extras %}
 {% block content_eaubelix %}
 
-    <div class="w3-bar w3-xlarge">
+    <div class="w3-bar w3-xlarge bg_bleu_fonce_curatio w3-text-white">
         {% for boiler in boilers %}
-            <button id="{{ boiler.id }}_button" class="w3-bar-item w3-button gris_clair_curatio w3-hover-white tablink"
+            <button id="{{ boiler.id }}_button" class="w3-bar-item w3-button w3-hover-white tablink"
                     onclick="openTab(event, '{{ boiler.id }}', 'tab', 'tablink', 'w3-white')"><span
                     class="w3-medium">{{ boiler.name }}</span></button>
         {% endfor %}
@@ -13,10 +13,10 @@
     {% for boiler in boilers %}
         <div id="{{ boiler.id }}" class="w3-card w3-white tab w3-padding-large" style="display:none">
             <button id="{{ boiler.id }}_data_button" class="w3-bar-item w3-button w3-round w3-hover-none innertablink"
-                    onclick='openTab(event, "data_{{ boiler.id }}", "innertab", "innertablink", "bg_bleu_pale_curatio")'>
+                    onclick='openTab(event, "data_{{ boiler.id }}", "innertab", "innertablink", "bg_bleu_fonce_curatio")'>
                 <span class="w3-medium">Données</span></button>
             <button class="w3-bar-item w3-button w3-round w3-hover-none innertablink"
-                    onclick='openTab(event, "charts_diagrams_{{ boiler.id }}", "innertab", "innertablink", "bg_bleu_pale_curatio")'>
+                    onclick='openTab(event, "charts_diagrams_{{ boiler.id }}", "innertab", "innertablink", "bg_bleu_fonce_curatio")'>
                 <span class="w3-medium">Chartes et Schémas</span></button>
             <!--- Charts and Diagrams -->
             <div id="charts_diagrams_{{ boiler.id }}" class="innertab" style="display:none">
@@ -101,7 +101,7 @@
 
                 </table>
 
-                <button class="w3-btn bg_bleu_flash_curatio"
+                <button class="w3-btn bg_bleu_fonce_curatio w3-text-white"
                         onclick="document.getElementById('data_add_{{ boiler.id }}').style.display='block'"><span
                         class="w3-medium">Ajouter une entrée</span></button>
             </div>

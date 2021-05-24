@@ -6,44 +6,32 @@
     <div class="bg_gris_clair_curatio">
         <button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey" onclick="open_sideBarDashboard();"><i class="fa fa-bars w3-padding"></i> Menu Eaubelix </button>
     </div>
-    <nav class="w3-sidebar w3-collapse bg_gris_clair_curatio" style="z-index:3;width:300px;" id="sideBarDashboard"><br>
-{#        <div class="w3-container w3-row w3-bottombar w3-border-black ">#}
-{#            <div class="w3-col s8 w3-bar">#}
-{#                <span>Bienvenue, <strong>{{ request.user.username }}</strong></span><br>#}
-{#                <a href="#" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i></a>#}
-{#                <a href="#" class="w3-bar-item w3-button"><i class="fa fa-user"></i></a>#}
-{#                <a href="#" class="w3-bar-item w3-button"><i class="fa fa-cog"></i></a>#}
-{#            </div>#}
-{#        </div>#}
-
+    <nav class="w3-sidebar w3-collapse bg_gris_clair_curatio" style="z-index:3;width:200px;" id="sideBarDashboard"><br>
         <div class="w3-container">
             <h5> Menu </h5>
         </div>
         <div class="w3-bar-block">
             <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black"
                onclick="close_sideBarDashboard()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Fermer </a>
-            <a href="{% url 'eaubelix' %}" class="w3-bar-item w3-button w3-padding {% if "home" in request.path %} bg_bleu_flash_curatio {% endif %}"><i class="fas fa-chart-pie"></i>  Overview </a>
-{#            {% if request.user.type == "CLIENT" %}#}
-{#                <a href="{% url 'operators' %}" class="w3-bar-item w3-button w3-padding {% if "operators" in request.path %} bg_bleu_flash_curatio {% endif %}"><i class="fa fa-users"></i> Gestion des opérateurs </a>#}
-{#            {% endif %}#}
+            <a href="{% url 'eaubelix' %}" class="w3-bar-item w3-button w3-padding {% if "home" in request.path %} bg_bleu_fonce_curatio w3-text-white {% endif %}"><i class="fas fa-chart-pie"></i>  Overview </a>
             {% if client.inventory %}
-                <a href="{% url 'inventory' %}" class="w3-bar-item w3-button w3-padding {% if "inventory" in request.path %} bg_bleu_flash_curatio {% endif %}"><i class="fa fa-boxes"></i>  Inventaire </a>
+                <a href="{% url 'inventory' %}" class="w3-bar-item w3-button w3-padding {% if "inventory" in request.path %} bg_bleu_fonce_curatio w3-text-white {% endif %}"><i class="fa fa-boxes"></i>  Inventaire </a>
             {% endif %}
 
-            {% if client.pretreatment_set.all %}
-            <a href="{% url 'pretreatment' %}" class="w3-bar-item w3-button w3-padding {% if "pretreatment" in request.path %} bg_bleu_flash_curatio {% endif %}"><i class="fa fa-clipboard"></i>  Prétraitement </a>
+            {% if client.pretreatment %}
+            <a href="{% url 'pretreatment' %}" class="w3-bar-item w3-button w3-padding {% if "pretreatment" in request.path %} bg_bleu_fonce_curatio w3-text-white {% endif %}"><i class="fa fa-clipboard"></i>  Prétraitement </a>
             {% endif %}
 
             {% if client.boiler_set.all %}
-            <a href="{% url 'boilers' %}" class="w3-bar-item w3-button w3-padding {% if "boilers" in request.path %} bg_bleu_flash_curatio {% endif %}" ><i class="fa fa-tint"></i>  Chaudières </a>
+            <a href="{% url 'boilers' %}" class="w3-bar-item w3-button w3-padding {% if "boilers" in request.path %} bg_bleu_fonce_curatio w3-text-white {% endif %}" ><i class="fa fa-tint"></i>  Chaudières </a>
             {% endif %}
 
             {% if client.watertower_set.all %}
-            <a href="{% url 'water_towers' %}" class="w3-bar-item w3-button w3-padding {% if "water_towers" in request.path %} bg_bleu_flash_curatio {% endif %}"><i class="fa fa-tint"></i>  Tours d’eau </a>
+            <a href="{% url 'water_towers' %}" class="w3-bar-item w3-button w3-padding {% if "water_towers" in request.path %} bg_bleu_fonce_curatio w3-text-white {% endif %}"><i class="fa fa-tint"></i>  Tours d’eau </a>
             {% endif %}
 
             {% if client.closednetwork_set.all %}
-            <a href="{% url 'closed_networks' %}" class="w3-bar-item w3-button w3-padding {% if "closed_networks" in request.path %} bg_bleu_flash_curatio {% endif %}"><i class="fa fa-project-diagram"></i>  Réseaux fermés </a>
+            <a href="{% url 'closed_networks' %}" class="w3-bar-item w3-button w3-padding {% if "closed_networks" in request.path %} bg_bleu_fonce_curatio w3-text-white {% endif %}"><i class="fa fa-project-diagram"></i>  Réseaux fermés </a>
             {% endif %}
         </div>
     </nav>
@@ -53,7 +41,7 @@
     <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="close_sideBarDashboard()" style="cursor:pointer"
          title="close side menu" id="myOverlay"></div>
 
-    <div class="w3-main" style="margin-left:300px;">
+    <div class="w3-main" style="margin-left:200px;">
         {% block content_eaubelix %}
 
         {% endblock content_eaubelix %}

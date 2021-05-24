@@ -2,9 +2,9 @@
 {% load auth_extras %}
 {% block content_eaubelix %}
 
-    <div class="w3-bar w3-xlarge">
+    <div class="w3-bar w3-xlarge bg_bleu_fonce_curatio w3-text-white">
         {% for closed_network in closed_networks %}
-            <button id="{{ closed_network.id }}_button" class="w3-bar-item w3-button gris_clair_curatio w3-hover-white tablink"
+            <button id="{{ closed_network.id }}_button" class="w3-bar-item w3-button w3-hover-white tablink"
                     onclick="openTab(event, '{{ closed_network.id }}', 'tab', 'tablink', 'w3-white')"><span
                     class="w3-medium">{{ closed_network.name }}</span></button>
         {% endfor %}
@@ -13,10 +13,10 @@
     {% for closed_network in closed_networks %}
         <div id="{{ closed_network.id }}" class="w3-card w3-white tab w3-padding-large" style="display:none">
             <button id="{{ closed_network.id }}_data_button"  class="w3-bar-item w3-button w3-round w3-hover-none innertablink"
-                    onclick='openTab(event, "data_{{ closed_network.id }}", "innertab", "innertablink", "bg_bleu_pale_curatio")'>
+                    onclick='openTab(event, "data_{{ closed_network.id }}", "innertab", "innertablink", "bg_bleu_fonce_curatio")'>
                 <span class="w3-medium">Données</span></button>
             <button class="w3-bar-item w3-button w3-round w3-hover-none innertablink"
-                    onclick='openTab(event, "charts_diagrams_{{ closed_network.id }}", "innertab", "innertablink", "bg_bleu_pale_curatio")'>
+                    onclick='openTab(event, "charts_diagrams_{{ closed_network.id }}", "innertab", "innertablink", "bg_bleu_fonce_curatio")'>
                 <span class="w3-medium">Chartes et Schémas</span></button>
             <!--- Charts and Diagrams -->
             <div id="charts_diagrams_{{ closed_network.id }}" class="innertab" style="display:none">
@@ -104,7 +104,7 @@
 
                 </table>
 
-                <button class="w3-btn bg_bleu_flash_curatio"
+                <button class="w3-btn bg_bleu_fonce_curatio w3-text-white"
                         onclick="document.getElementById('data_add_{{ closed_network.id }}').style.display='block'"><span
                         class="w3-medium">Ajouter une entrée</span></button>
             </div>

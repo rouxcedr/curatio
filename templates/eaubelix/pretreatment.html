@@ -2,5 +2,597 @@
 {% load auth_extras %}
 {% block content_eaubelix %}
 
+    <div class="w3-bar w3-xlarge bg_bleu_fonce_curatio w3-text-white">
+            <button id="softener_button" class="w3-bar-item w3-button gris_clair_curatio w3-hover-white tablink"
+                    onclick="openTab(event, 'softener', 'tab', 'tablink', 'w3-white')"><span
+                    class="w3-medium">Adoucisseur</span></button>
+            <button id="dealkalizer_button" class="w3-bar-item w3-button gris_clair_curatio w3-hover-white tablink"
+                    onclick="openTab(event, 'dealkalizer', 'tab', 'tablink', 'w3-white')"><span
+                    class="w3-medium">Dealcaliseur</span></button>
+            <button id="reverse_osmosis_button" class="w3-bar-item w3-button gris_clair_curatio w3-hover-white tablink"
+                    onclick="openTab(event, 'reverse_osmosis', 'tab', 'tablink', 'w3-white')"><span
+                    class="w3-medium">Osmose Inverse</span></button>
+            <button id="degasser_button" class="w3-bar-item w3-button gris_clair_curatio w3-hover-white tablink"
+                    onclick="openTab(event, 'degasser', 'tab', 'tablink', 'w3-white')"><span
+                    class="w3-medium">Dégazeur</span></button>
+            <button id="mix_button" class="w3-bar-item w3-button gris_clair_curatio w3-hover-white tablink"
+                    onclick="openTab(event, 'mix', 'tab', 'tablink', 'w3-white')"><span
+                    class="w3-medium">Mélange</span></button>
+            <button id="condensate_button" class="w3-bar-item w3-button gris_clair_curatio w3-hover-white tablink"
+                    onclick="openTab(event, 'condensate', 'tab', 'tablink', 'w3-white')"><span
+                    class="w3-medium">Condensat</span></button>
+    </div>
+
+    <div id="softener" class="w3-card w3-white tab w3-padding-large" style="display:none">
+        <table class="datatable display w3-responsive nowrap" style="width:100%">
+            <thead>
+            <tr>
+                <th class="reorder" rowspan="3">Date</th>
+                <th rowspan="3">Opérateur</th>
+                <th>Limites</th>
+                <th {% if "dt_1" not in pretreatment.softener_data_shown %} class="hidden" {% endif %}>D.T. #1</th>
+                <th {% if "dt_2" not in pretreatment.softener_data_shown %} class="hidden" {% endif %}>D.T. #2</th>
+                <th {% if "dt_3" not in pretreatment.softener_data_shown %} class="hidden" {% endif %}>D.T. #3</th>
+                <th {% if "cond_1" not in pretreatment.softener_data_shown %} class="hidden" {% endif %}>Cond #1</th>
+                <th {% if "cond_2" not in pretreatment.softener_data_shown %} class="hidden" {% endif %}>Cond #2</th>
+                <th {% if "cond_3" not in pretreatment.softener_data_shown %} class="hidden" {% endif %}>Cond #3</th>
+            </tr>
+            <tr>
+                <td>MIN</td>
+                <td {% if "dt_1" not in pretreatment.softener_data_shown %} class="hidden"{% endif %}>{{ pretreatment.softener_minmax.dt_1_min }}</td>
+                <td {% if "dt_2" not in pretreatment.softener_data_shown %} class="hidden"{% endif %}>{{ pretreatment.softener_minmax.dt_2_min }}</td>
+                <td {% if "dt_3" not in pretreatment.softener_data_shown %} class="hidden"{% endif %}>{{ pretreatment.softener_minmax.dt_3_min }}</td>
+                <td {% if "cond_1" not in pretreatment.softener_data_shown %} class="hidden"{% endif %}>{{ pretreatment.softener_minmax.cond_1_min }}</td>
+                <td {% if "cond_2" not in pretreatment.softener_data_shown %} class="hidden"{% endif %}>{{ pretreatment.softener_minmax.cond_2_min }}</td>
+                <td {% if "cond_3" not in pretreatment.softener_data_shown %} class="hidden"{% endif %}>{{ pretreatment.softener_minmax.cond_3_min }}</td>
+            </tr>
+            <tr>
+                <td>MAX</td>
+                <td {% if "dt_1" not in pretreatment.softener_data_shown %} class="hidden"{% endif %}>{{ pretreatment.softener_minmax.dt_1_max }}</td>
+                <td {% if "dt_2" not in pretreatment.softener_data_shown %} class="hidden"{% endif %}>{{ pretreatment.softener_minmax.dt_2_max }}</td>
+                <td {% if "dt_3" not in pretreatment.softener_data_shown %} class="hidden"{% endif %}>{{ pretreatment.softener_minmax.dt_3_max }}</td>
+                <td {% if "cond_1" not in pretreatment.softener_data_shown %} class="hidden"{% endif %}>{{ pretreatment.softener_minmax.cond_1_max }}</td>
+                <td {% if "cond_2" not in pretreatment.softener_data_shown %} class="hidden"{% endif %}>{{ pretreatment.softener_minmax.cond_2_max }}</td>
+                <td {% if "cond_3" not in pretreatment.softener_data_shown %} class="hidden"{% endif %}>{{ pretreatment.softener_minmax.cond_3_max }}</td>
+            </tr>
+            </thead>
+            <tbody>
+                {% for softener_data in pretreatment.softener_data.all %}
+                    <tr>
+                        <td>{{ softener_data.date }}</td>
+                        <td>{{ softener_data.operator.username }}</td>
+                        <td></td>
+                        <td {% if "dt_1" in pretreatment.softener_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ softener_data.dt_1 }}</td>
+                        <td {% if "dt_2" in pretreatment.softener_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ softener_data.dt_2 }}</td>
+                        <td {% if "dt_3" in pretreatment.softener_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ softener_data.dt_3 }}</td>
+                        <td {% if "cond_1" in pretreatment.softener_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ softener_data.cond_1 }}</td>
+                        <td {% if "cond_2" in pretreatment.softener_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ softener_data.cond_2 }}</td>
+                        <td {% if "cond_3" in pretreatment.softener_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ softener_data.cond_3 }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+        <button class="w3-btn bg_bleu_fonce_curatio w3-text-white"
+                        onclick="document.getElementById('data_add_pretreatment_softener').style.display='block'"><span
+                        class="w3-medium">Ajouter une entrée</span></button>
+    </div>
+
+    <div id="dealkalizer" class="w3-card w3-white tab w3-padding-large" style="display:none">
+        <table class="datatable display w3-responsive nowrap" style="width:100%">
+            <thead>
+            <tr>
+                <th class="reorder" rowspan="3">Date</th>
+                <th rowspan="3">Opérateur</th>
+                <th>Limites</th>
+                <th {% if "p_1" not in pretreatment.dealkalizer_data_shown %} class="hidden" {% endif %}>P #1</th>
+                <th {% if "p_2" not in pretreatment.dealkalizer_data_shown %} class="hidden" {% endif %}>P #2</th>
+                <th {% if "m_1" not in pretreatment.dealkalizer_data_shown %} class="hidden" {% endif %}>M #1</th>
+                <th {% if "m_2" not in pretreatment.dealkalizer_data_shown %} class="hidden" {% endif %}>M #2</th>
+                <th {% if "cl" not in pretreatment.dealkalizer_data_shown %} class="hidden" {% endif %}>Cl-</th>
+                <th {% if "ph" not in pretreatment.dealkalizer_data_shown %} class="hidden" {% endif %}>pH</th>
+            </tr>
+            <tr>
+                <td>MIN</td>
+                <td {% if "p_1" not in pretreatment.dealkalizer_data_shown %} class="hidden"{% endif %}>{{ pretreatment.dealkalizer_minmax.p_1_min }}</td>
+                <td {% if "p_2" not in pretreatment.dealkalizer_data_shown %} class="hidden"{% endif %}>{{ pretreatment.dealkalizer_minmax.p_2_min }}</td>
+                <td {% if "m_1" not in pretreatment.dealkalizer_data_shown %} class="hidden"{% endif %}>{{ pretreatment.dealkalizer_minmax.m_1_min }}</td>
+                <td {% if "m_2" not in pretreatment.dealkalizer_data_shown %} class="hidden"{% endif %}>{{ pretreatment.dealkalizer_minmax.m_2_min }}</td>
+                <td {% if "cl" not in pretreatment.dealkalizer_data_shown %} class="hidden"{% endif %}>{{ pretreatment.dealkalizer_minmax.cl_min }}</td>
+                <td {% if "ph" not in pretreatment.dealkalizer_data_shown %} class="hidden"{% endif %}>{{ pretreatment.dealkalizer_minmax.ph_min }}</td>
+            </tr>
+            <tr>
+                <td>MAX</td>
+                <td {% if "p_1" not in pretreatment.dealkalizer_data_shown %} class="hidden"{% endif %}>{{ pretreatment.dealkalizer_minmax.p_1_max }}</td>
+                <td {% if "p_2" not in pretreatment.dealkalizer_data_shown %} class="hidden"{% endif %}>{{ pretreatment.dealkalizer_minmax.p_2_max }}</td>
+                <td {% if "m_1" not in pretreatment.dealkalizer_data_shown %} class="hidden"{% endif %}>{{ pretreatment.dealkalizer_minmax.m_1_max }}</td>
+                <td {% if "m_2" not in pretreatment.dealkalizer_data_shown %} class="hidden"{% endif %}>{{ pretreatment.dealkalizer_minmax.m_2_max }}</td>
+                <td {% if "cl" not in pretreatment.dealkalizer_data_shown %} class="hidden"{% endif %}>{{ pretreatment.dealkalizer_minmax.cl_max }}</td>
+                <td {% if "ph" not in pretreatment.dealkalizer_data_shown %} class="hidden"{% endif %}>{{ pretreatment.dealkalizer_minmax.ph_max }}</td>
+            </tr>
+            </thead>
+            <tbody>
+            {% for dealkalizer_data in pretreatment.dealkalizer_data.all %}
+                <tr>
+                    <td>{{ dealkalizer_data.date }}</td>
+                    <td>{{ dealkalizer_data.operator.username }}</td>
+                    <td></td>
+                    <td {% if "p_1" in pretreatment.dealkalizer_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ dealkalizer_data.p_1 }}</td>
+                    <td {% if "p_2" in pretreatment.dealkalizer_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ dealkalizer_data.p_2 }}</td>
+                    <td {% if "m_1" in pretreatment.dealkalizer_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ dealkalizer_data.m_1 }}</td>
+                    <td {% if "m_2" in pretreatment.dealkalizer_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ dealkalizer_data.m_2 }}</td>
+                    <td {% if "cl" in pretreatment.dealkalizer_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ dealkalizer_data.cl }}</td>
+                    <td {% if "ph" in pretreatment.dealkalizer_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ dealkalizer_data.ph }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+
+        </table>
+        <button class="w3-btn bg_bleu_fonce_curatio w3-text-white"
+                        onclick="document.getElementById('data_add_pretreatment_dealkalizer').style.display='block'"><span
+                        class="w3-medium">Ajouter une entrée</span></button>
+    </div>
+
+    <div id="reverse_osmosis" class="w3-card w3-white tab w3-padding-large" style="display:none">
+        <table class="datatable display w3-responsive nowrap" style="width:100%">
+            <thead>
+            <tr>
+                <th class="reorder" rowspan="3">Date</th>
+                <th rowspan="3">Opérateur</th>
+                <th>Limites</th>
+                <th {% if "cl2" not in pretreatment.reverse_osmosis_data_shown %} class="hidden" {% endif %}>Cl2</th>
+                <th {% if "permeat" not in pretreatment.reverse_osmosis_data_shown %} class="hidden" {% endif %}>Permeat</th>
+                <th {% if "reject" not in pretreatment.reverse_osmosis_data_shown %} class="hidden" {% endif %}>Rejet</th>
+                <th {% if "recirc" not in pretreatment.reverse_osmosis_data_shown %} class="hidden" {% endif %}>Recirc</th>
+                <th {% if "temp" not in pretreatment.reverse_osmosis_data_shown %} class="hidden" {% endif %}>Temp</th>
+                <th {% if "p_in" not in pretreatment.reverse_osmosis_data_shown %} class="hidden"{% endif %}>P in</th>
+                <th {% if "p_out" not in pretreatment.reverse_osmosis_data_shown %} class="hidden"{% endif %}>P out</th>
+                <th {% if "delta_p" not in pretreatment.reverse_osmosis_data_shown %} class="hidden"{% endif %}>Delta P</th>
+                <th {% if "ph" not in pretreatment.reverse_osmosis_data_shown %} class="hidden"{% endif %}>M</th>
+                <th {% if "ph" not in pretreatment.reverse_osmosis_data_shown %} class="hidden"{% endif %}>pH</th>
+            </tr>
+            <tr>
+                <td>MIN</td>
+                <td {% if "cl2" not in pretreatment.reverse_osmosis_data_shown %} class="hidden"{% endif %}>{{ pretreatment.reverse_osmosis_minmax.cl2_min }}</td>
+                <td {% if "permeat" not in pretreatment.reverse_osmosis_data_shown %} class="hidden"{% endif %}>{{ pretreatment.reverse_osmosis_minmax.permeat_min }}</td>
+                <td {% if "reject" not in pretreatment.reverse_osmosis_data_shown %} class="hidden"{% endif %}>{{ pretreatment.reverse_osmosis_minmax.reject_min }}</td>
+                <td {% if "recirc" not in pretreatment.reverse_osmosis_data_shown %} class="hidden"{% endif %}>{{ pretreatment.reverse_osmosis_minmax.recirc_min }}</td>
+                <td {% if "temp" not in pretreatment.reverse_osmosis_data_shown %} class="hidden"{% endif %}>{{ pretreatment.reverse_osmosis_minmax.temp_min }}</td>
+                <td {% if "p_in" not in pretreatment.reverse_osmosis_data_shown %} class="hidden"{% endif %}>{{ pretreatment.reverse_osmosis_minmax.p_in_min }}</td>
+                <td {% if "p_out" not in pretreatment.reverse_osmosis_data_shown %} class="hidden"{% endif %}>{{ pretreatment.reverse_osmosis_minmax.p_out_min }}</td>
+                <td {% if "delta_p" not in pretreatment.reverse_osmosis_data_shown %} class="hidden"{% endif %}>{{ pretreatment.reverse_osmosis_minmax.delta_p_min }}</td>
+                <td {% if "ph" not in pretreatment.reverse_osmosis_data_shown %} class="hidden"{% endif %}>{{ pretreatment.reverse_osmosis_minmax.m_min }}</td>
+                <td {% if "ph" not in pretreatment.reverse_osmosis_data_shown %} class="hidden"{% endif %}>{{ pretreatment.reverse_osmosis_minmax.ph_min }}</td>
+            </tr>
+            <tr>
+                <td>MAX</td>
+                <td {% if "cl2" not in pretreatment.reverse_osmosis_data_shown %} class="hidden"{% endif %}>{{ pretreatment.reverse_osmosis_minmax.cl2_max }}</td>
+                <td {% if "permeat" not in pretreatment.reverse_osmosis_data_shown %} class="hidden"{% endif %}>{{ pretreatment.reverse_osmosis_minmax.permeat_max }}</td>
+                <td {% if "reject" not in pretreatment.reverse_osmosis_data_shown %} class="hidden"{% endif %}>{{ pretreatment.reverse_osmosis_minmax.reject_max }}</td>
+                <td {% if "recirc" not in pretreatment.reverse_osmosis_data_shown %} class="hidden"{% endif %}>{{ pretreatment.reverse_osmosis_minmax.recirc_max }}</td>
+                <td {% if "temp" not in pretreatment.reverse_osmosis_data_shown %} class="hidden"{% endif %}>{{ pretreatment.reverse_osmosis_minmax.temp_max }}</td>
+                <td {% if "p_in" not in pretreatment.reverse_osmosis_data_shown %} class="hidden"{% endif %}>{{ pretreatment.reverse_osmosis_minmax.p_in_max }}</td>
+                <td {% if "p_out" not in pretreatment.reverse_osmosis_data_shown %} class="hidden"{% endif %}>{{ pretreatment.reverse_osmosis_minmax.p_out_max }}</td>
+                <td {% if "delta_p" not in pretreatment.reverse_osmosis_data_shown %} class="hidden"{% endif %}>{{ pretreatment.reverse_osmosis_minmax.delta_p_max }}</td>
+                <td {% if "ph" not in pretreatment.reverse_osmosis_data_shown %} class="hidden"{% endif %}>{{ pretreatment.reverse_osmosis_minmax.m_max }}</td>
+                <td {% if "ph" not in pretreatment.reverse_osmosis_data_shown %} class="hidden"{% endif %}>{{ pretreatment.reverse_osmosis_minmax.ph_max }}</td>
+            </tr>
+            </thead>
+            <tbody>
+            {% for reverse_osmosis_data in pretreatment.reverse_osmosis_data.all %}
+                <tr>
+                    <td>{{ reverse_osmosis_data.date }}</td>
+                    <td>{{ reverse_osmosis_data.operator.username }}</td>
+                    <td></td>
+                    <td {% if "cl2" in pretreatment.reverse_osmosis_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ reverse_osmosis_data.cl2 }}</td>
+                    <td {% if "permeat" in pretreatment.reverse_osmosis_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ reverse_osmosis_data.permeat }}</td>
+                    <td {% if "reject" in pretreatment.reverse_osmosis_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ reverse_osmosis_data.reject }}</td>
+                    <td {% if "recirc" in pretreatment.reverse_osmosis_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ reverse_osmosis_data.recirc }}</td>
+                    <td {% if "temp" in pretreatment.reverse_osmosis_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ reverse_osmosis_data.temp }}</td>
+                    <td {% if "p_in" in pretreatment.reverse_osmosis_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ reverse_osmosis_data.p_in }}</td>
+                    <td {% if "p_out" in pretreatment.reverse_osmosis_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ reverse_osmosis_data.p_out }}</td>
+                    <td {% if "delta_p" in pretreatment.reverse_osmosis_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ reverse_osmosis_data.delta_p }}</td>
+                    <td {% if "ph" in pretreatment.reverse_osmosis_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ reverse_osmosis_data.ph }}</td>
+                    <td {% if "ph" in pretreatment.reverse_osmosis_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ reverse_osmosis_data.ph }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+
+        </table>
+        <button class="w3-btn bg_bleu_fonce_curatio w3-text-white"
+                            onclick="document.getElementById('data_add_pretreatment_reverse_osmosis').style.display='block'"><span
+                            class="w3-medium">Ajouter une entrée</span></button>
+    </div>
+
+    <div id="degasser" class="w3-card w3-white tab w3-padding-large" style="display:none">
+        <table class="datatable display w3-responsive nowrap" style="width:100%">
+            <thead>
+            <tr>
+                <th class="reorder" rowspan="3">Date</th>
+                <th rowspan="3">Opérateur</th>
+                <th>Limites</th>
+                <th {% if "dt" not in pretreatment.degasser_data_shown %} class="hidden" {% endif %}>D.T.</th>
+                <th {% if "fe" not in pretreatment.degasser_data_shown %} class="hidden" {% endif %}>Cond</th>
+                <th {% if "ph" not in pretreatment.degasser_data_shown %} class="hidden" {% endif %}>pH</th>
+                <th {% if "p" not in pretreatment.degasser_data_shown %} class="hidden" {% endif %}>P</th>
+                <th {% if "m" not in pretreatment.degasser_data_shown %} class="hidden" {% endif %}>M</th>
+                <th {% if "cl" not in pretreatment.degasser_data_shown %} class="hidden" {% endif %}>Cl-</th>
+                <th {% if "fe" not in pretreatment.degasser_data_shown %} class="hidden"{% endif %}>Fe</th>
+                <th {% if "cu" not in pretreatment.degasser_data_shown %} class="hidden"{% endif %}>Cu</th>
+                <th {% if "temp" not in pretreatment.degasser_data_shown %} class="hidden"{% endif %}>Temp</th>
+                <th {% if "inh" not in pretreatment.degasser_data_shown %} class="hidden"{% endif %}>Inh</th>
+                <th {% if "counter" not in pretreatment.degasser_data_shown %} class="hidden"{% endif %}>Compteur</th>
+            </tr>
+            <tr>
+                <td>MIN</td>
+                <td {% if "dt" not in pretreatment.degasser_data_shown %} class="hidden"{% endif %}>{{ pretreatment.degasser_minmax.dt_min }}</td>
+                <td {% if "fe" not in pretreatment.degasser_data_shown %} class="hidden"{% endif %}>{{ pretreatment.degasser_minmax.cond_min }}</td>
+                <td {% if "ph" not in pretreatment.degasser_data_shown %} class="hidden"{% endif %}>{{ pretreatment.degasser_minmax.ph_min }}</td>
+                <td {% if "p" not in pretreatment.degasser_data_shown %} class="hidden"{% endif %}>{{ pretreatment.degasser_minmax.p_min }}</td>
+                <td {% if "m" not in pretreatment.degasser_data_shown %} class="hidden"{% endif %}>{{ pretreatment.degasser_minmax.m_min }}</td>
+                <td {% if "cl" not in pretreatment.degasser_data_shown %} class="hidden"{% endif %}>{{ pretreatment.degasser_minmax.cl_min }}</td>
+                <td {% if "fe" not in pretreatment.degasser_data_shown %} class="hidden"{% endif %}>{{ pretreatment.degasser_minmax.fe_min }}</td>
+                <td {% if "cu" not in pretreatment.degasser_data_shown %} class="hidden"{% endif %}>{{ pretreatment.degasser_minmax.cu_min }}</td>
+                <td {% if "temp" not in pretreatment.degasser_data_shown %} class="hidden"{% endif %}>{{ pretreatment.degasser_minmax.temp_min }}</td>
+                <td {% if "inh" not in pretreatment.degasser_data_shown %} class="hidden"{% endif %}>{{ pretreatment.degasser_minmax.inh_min }}</td>
+                <td {% if "counter" not in pretreatment.degasser_data_shown %} class="hidden"{% endif %}>{{ pretreatment.degasser_minmax.counter_min }}</td>
+            </tr>
+            <tr>
+                <td>MAX</td>
+                <td {% if "dt" not in pretreatment.degasser_data_shown %} class="hidden"{% endif %}>{{ pretreatment.degasser_minmax.dt_max }}</td>
+                <td {% if "fe" not in pretreatment.degasser_data_shown %} class="hidden"{% endif %}>{{ pretreatment.degasser_minmax.cond_max }}</td>
+                <td {% if "ph" not in pretreatment.degasser_data_shown %} class="hidden"{% endif %}>{{ pretreatment.degasser_minmax.ph_max }}</td>
+                <td {% if "p" not in pretreatment.degasser_data_shown %} class="hidden"{% endif %}>{{ pretreatment.degasser_minmax.p_max }}</td>
+                <td {% if "m" not in pretreatment.degasser_data_shown %} class="hidden"{% endif %}>{{ pretreatment.degasser_minmax.m_max }}</td>
+                <td {% if "cl" not in pretreatment.degasser_data_shown %} class="hidden"{% endif %}>{{ pretreatment.degasser_minmax.cl_max }}</td>
+                <td {% if "fe" not in pretreatment.degasser_data_shown %} class="hidden"{% endif %}>{{ pretreatment.degasser_minmax.fe_max }}</td>
+                <td {% if "cu" not in pretreatment.degasser_data_shown %} class="hidden"{% endif %}>{{ pretreatment.degasser_minmax.cu_max }}</td>
+                <td {% if "temp" not in pretreatment.degasser_data_shown %} class="hidden"{% endif %}>{{ pretreatment.degasser_minmax.temp_max }}</td>
+                <td {% if "inh" not in pretreatment.degasser_data_shown %} class="hidden"{% endif %}>{{ pretreatment.degasser_minmax.inh_max }}</td>
+                <td {% if "counter" not in pretreatment.degasser_data_shown %} class="hidden"{% endif %}>{{ pretreatment.degasser_minmax.counter_max }}</td>
+            </tr>
+            </thead>
+            <tbody>
+            {% for degasser_data in pretreatment.degasser_data.all %}
+                <tr>
+                    <td>{{ degasser_data.date }}</td>
+                    <td>{{ degasser_data.operator.username }}</td>
+                    <td></td>
+                    <td {% if "dt" in pretreatment.degasser_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ degasser_data.dt }}</td>
+                    <td {% if "fe" in pretreatment.degasser_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ degasser_data.fe }}</td>
+                    <td {% if "ph" in pretreatment.degasser_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ degasser_data.ph }}</td>
+                    <td {% if "p" in pretreatment.degasser_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ degasser_data.p }}</td>
+                    <td {% if "m" in pretreatment.degasser_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ degasser_data.m }}</td>
+                    <td {% if "cl" in pretreatment.degasser_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ degasser_data.cl }}</td>
+                    <td {% if "fe" in pretreatment.degasser_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ degasser_data.fe }}</td>
+                    <td {% if "cu" in pretreatment.degasser_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ degasser_data.cu }}</td>
+                    <td {% if "temp" in pretreatment.degasser_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ degasser_data.temp }}</td>
+                    <td {% if "inh" in pretreatment.degasser_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ degasser_data.inh }}</td>
+                    <td {% if "counter" in pretreatment.degasser_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ degasser_data.counter }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+
+        </table>
+        <button class="w3-btn bg_bleu_fonce_curatio w3-text-white"
+                        onclick="document.getElementById('data_add_pretreatment_degasser').style.display='block'"><span
+                        class="w3-medium">Ajouter une entrée</span></button>
+    </div>
+
+    <div id="mix" class="w3-card w3-white tab w3-padding-large" style="display:none">
+        <table class="datatable display w3-responsive nowrap" style="width:100%">
+            <thead>
+            <tr>
+                <th class="reorder" rowspan="3">Date</th>
+                <th rowspan="3">Opérateur</th>
+                <th>Limites</th>
+                <th {% if "dt" not in pretreatment.mix_data_shown %} class="hidden" {% endif %}>D.T.</th>
+                <th {% if "fe" not in pretreatment.mix_data_shown %} class="hidden" {% endif %}>Cond</th>
+                <th {% if "ph" not in pretreatment.mix_data_shown %} class="hidden" {% endif %}>pH</th>
+                <th {% if "p" not in pretreatment.mix_data_shown %} class="hidden" {% endif %}>P</th>
+                <th {% if "m" not in pretreatment.mix_data_shown %} class="hidden" {% endif %}>M</th>
+                <th {% if "cl" not in pretreatment.mix_data_shown %} class="hidden" {% endif %}>Cl-</th>
+                <th {% if "fe" not in pretreatment.mix_data_shown %} class="hidden"{% endif %}>Fe</th>
+                <th {% if "cu" not in pretreatment.mix_data_shown %} class="hidden"{% endif %}>Cu</th>
+                <th {% if "temp" not in pretreatment.mix_data_shown %} class="hidden"{% endif %}>Temp</th>
+                <th {% if "inh" not in pretreatment.mix_data_shown %} class="hidden"{% endif %}>Inh</th>
+                <th {% if "counter" not in pretreatment.mix_data_shown %} class="hidden"{% endif %}>Compteur</th>
+            </tr>
+            <tr>
+                <td>MIN</td>
+                <td {% if "dt" not in pretreatment.mix_data_shown %} class="hidden"{% endif %}>{{ pretreatment.mix_minmax.dt_min }}</td>
+                <td {% if "fe" not in pretreatment.mix_data_shown %} class="hidden"{% endif %}>{{ pretreatment.mix_minmax.cond_min }}</td>
+                <td {% if "ph" not in pretreatment.mix_data_shown %} class="hidden"{% endif %}>{{ pretreatment.mix_minmax.ph_min }}</td>
+                <td {% if "p" not in pretreatment.mix_data_shown %} class="hidden"{% endif %}>{{ pretreatment.mix_minmax.p_min }}</td>
+                <td {% if "m" not in pretreatment.mix_data_shown %} class="hidden"{% endif %}>{{ pretreatment.mix_minmax.m_min }}</td>
+                <td {% if "cl" not in pretreatment.mix_data_shown %} class="hidden"{% endif %}>{{ pretreatment.mix_minmax.cl_min }}</td>
+                <td {% if "fe" not in pretreatment.mix_data_shown %} class="hidden"{% endif %}>{{ pretreatment.mix_minmax.fe_min }}</td>
+                <td {% if "cu" not in pretreatment.mix_data_shown %} class="hidden"{% endif %}>{{ pretreatment.mix_minmax.cu_min }}</td>
+                <td {% if "temp" not in pretreatment.mix_data_shown %} class="hidden"{% endif %}>{{ pretreatment.mix_minmax.temp_min }}</td>
+                <td {% if "inh" not in pretreatment.mix_data_shown %} class="hidden"{% endif %}>{{ pretreatment.mix_minmax.inh_min }}</td>
+                <td {% if "counter" not in pretreatment.mix_data_shown %} class="hidden"{% endif %}>{{ pretreatment.mix_minmax.counter_min }}</td>
+            </tr>
+            <tr>
+                <td>MAX</td>
+                <td {% if "dt" not in pretreatment.mix_data_shown %} class="hidden"{% endif %}>{{ pretreatment.mix_minmax.dt_max }}</td>
+                <td {% if "fe" not in pretreatment.mix_data_shown %} class="hidden"{% endif %}>{{ pretreatment.mix_minmax.cond_max }}</td>
+                <td {% if "ph" not in pretreatment.mix_data_shown %} class="hidden"{% endif %}>{{ pretreatment.mix_minmax.ph_max }}</td>
+                <td {% if "p" not in pretreatment.mix_data_shown %} class="hidden"{% endif %}>{{ pretreatment.mix_minmax.p_max }}</td>
+                <td {% if "m" not in pretreatment.mix_data_shown %} class="hidden"{% endif %}>{{ pretreatment.mix_minmax.m_max }}</td>
+                <td {% if "cl" not in pretreatment.mix_data_shown %} class="hidden"{% endif %}>{{ pretreatment.mix_minmax.cl_max }}</td>
+                <td {% if "fe" not in pretreatment.mix_data_shown %} class="hidden"{% endif %}>{{ pretreatment.mix_minmax.fe_max }}</td>
+                <td {% if "cu" not in pretreatment.mix_data_shown %} class="hidden"{% endif %}>{{ pretreatment.mix_minmax.cu_max }}</td>
+                <td {% if "temp" not in pretreatment.mix_data_shown %} class="hidden"{% endif %}>{{ pretreatment.mix_minmax.temp_max }}</td>
+                <td {% if "inh" not in pretreatment.mix_data_shown %} class="hidden"{% endif %}>{{ pretreatment.mix_minmax.inh_max }}</td>
+                <td {% if "counter" not in pretreatment.mix_data_shown %} class="hidden"{% endif %}>{{ pretreatment.mix_minmax.counter_max }}</td>
+            </tr>
+            </thead>
+            <tbody>
+            {% for mix_data in pretreatment.mix_data.all %}
+                <tr>
+                    <td>{{ mix_data.date }}</td>
+                    <td>{{ mix_data.operator.username }}</td>
+                    <td></td>
+                    <td {% if "dt" in pretreatment.mix_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ mix_data.dt }}</td>
+                    <td {% if "fe" in pretreatment.mix_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ mix_data.fe }}</td>
+                    <td {% if "ph" in pretreatment.mix_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ mix_data.ph }}</td>
+                    <td {% if "p" in pretreatment.mix_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ mix_data.p }}</td>
+                    <td {% if "m" in pretreatment.mix_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ mix_data.m }}</td>
+                    <td {% if "cl" in pretreatment.mix_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ mix_data.cl }}</td>
+                    <td {% if "fe" in pretreatment.mix_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ mix_data.fe }}</td>
+                    <td {% if "cu" in pretreatment.mix_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ mix_data.cu }}</td>
+                    <td {% if "temp" in pretreatment.mix_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ mix_data.temp }}</td>
+                    <td {% if "inh" in pretreatment.mix_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ mix_data.inh }}</td>
+                    <td {% if "counter" in pretreatment.mix_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ mix_data.counter }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+
+        </table>
+        <button class="w3-btn bg_bleu_fonce_curatio w3-text-white"
+                        onclick="document.getElementById('data_add_pretreatment_mix').style.display='block'"><span
+                        class="w3-medium">Ajouter une entrée</span></button>
+    </div>
+
+    <div id="condensate" class="w3-card w3-white tab w3-padding-large" style="display:none">
+        <table class="datatable display w3-responsive nowrap" style="width:100%">
+            <thead>
+            <tr>
+                <th class="reorder" rowspan="3">Date</th>
+                <th rowspan="3">Opérateur</th>
+                <th>Limites</th>
+                <th {% if "dt" not in pretreatment.condensate_data_shown %} class="hidden" {% endif %}>D.T.</th>
+                <th {% if "fe" not in pretreatment.condensate_data_shown %} class="hidden" {% endif %}>Cond</th>
+                <th {% if "ph" not in pretreatment.condensate_data_shown %} class="hidden" {% endif %}>pH</th>
+                <th {% if "p" not in pretreatment.condensate_data_shown %} class="hidden" {% endif %}>P</th>
+                <th {% if "m" not in pretreatment.condensate_data_shown %} class="hidden" {% endif %}>M</th>
+                <th {% if "cl" not in pretreatment.condensate_data_shown %} class="hidden" {% endif %}>Cl-</th>
+                <th {% if "fe" not in pretreatment.condensate_data_shown %} class="hidden"{% endif %}>Fe</th>
+                <th {% if "cu" not in pretreatment.condensate_data_shown %} class="hidden"{% endif %}>Cu</th>
+                <th {% if "temp" not in pretreatment.condensate_data_shown %} class="hidden"{% endif %}>Temp</th>
+                <th {% if "counter" not in pretreatment.condensate_data_shown %} class="hidden"{% endif %}>Compteur</th>
+            </tr>
+            <tr>
+                <td>MIN</td>
+                <td {% if "dt" not in pretreatment.condensate_data_shown %} class="hidden"{% endif %}>{{ pretreatment.condensate_minmax.dt_min }}</td>
+                <td {% if "fe" not in pretreatment.condensate_data_shown %} class="hidden"{% endif %}>{{ pretreatment.condensate_minmax.cond_min }}</td>
+                <td {% if "ph" not in pretreatment.condensate_data_shown %} class="hidden"{% endif %}>{{ pretreatment.condensate_minmax.ph_min }}</td>
+                <td {% if "p" not in pretreatment.condensate_data_shown %} class="hidden"{% endif %}>{{ pretreatment.condensate_minmax.p_min }}</td>
+                <td {% if "m" not in pretreatment.condensate_data_shown %} class="hidden"{% endif %}>{{ pretreatment.condensate_minmax.m_min }}</td>
+                <td {% if "cl" not in pretreatment.condensate_data_shown %} class="hidden"{% endif %}>{{ pretreatment.condensate_minmax.cl_min }}</td>
+                <td {% if "fe" not in pretreatment.condensate_data_shown %} class="hidden"{% endif %}>{{ pretreatment.condensate_minmax.fe_min }}</td>
+                <td {% if "cu" not in pretreatment.condensate_data_shown %} class="hidden"{% endif %}>{{ pretreatment.condensate_minmax.cu_min }}</td>
+                <td {% if "temp" not in pretreatment.condensate_data_shown %} class="hidden"{% endif %}>{{ pretreatment.condensate_minmax.temp_min }}</td>
+                <td {% if "counter" not in pretreatment.condensate_data_shown %} class="hidden"{% endif %}>{{ pretreatment.condensate_minmax.counter_min }}</td>
+            </tr>
+            <tr>
+                <td>MAX</td>
+                <td {% if "dt" not in pretreatment.condensate_data_shown %} class="hidden"{% endif %}>{{ pretreatment.condensate_minmax.dt_max }}</td>
+                <td {% if "fe" not in pretreatment.condensate_data_shown %} class="hidden"{% endif %}>{{ pretreatment.condensate_minmax.cond_max }}</td>
+                <td {% if "ph" not in pretreatment.condensate_data_shown %} class="hidden"{% endif %}>{{ pretreatment.condensate_minmax.ph_max }}</td>
+                <td {% if "p" not in pretreatment.condensate_data_shown %} class="hidden"{% endif %}>{{ pretreatment.condensate_minmax.p_max }}</td>
+                <td {% if "m" not in pretreatment.condensate_data_shown %} class="hidden"{% endif %}>{{ pretreatment.condensate_minmax.m_max }}</td>
+                <td {% if "cl" not in pretreatment.condensate_data_shown %} class="hidden"{% endif %}>{{ pretreatment.condensate_minmax.cl_max }}</td>
+                <td {% if "fe" not in pretreatment.condensate_data_shown %} class="hidden"{% endif %}>{{ pretreatment.condensate_minmax.fe_max }}</td>
+                <td {% if "cu" not in pretreatment.condensate_data_shown %} class="hidden"{% endif %}>{{ pretreatment.condensate_minmax.cu_max }}</td>
+                <td {% if "temp" not in pretreatment.condensate_data_shown %} class="hidden"{% endif %}>{{ pretreatment.condensate_minmax.temp_max }}</td>
+                <td {% if "counter" not in pretreatment.condensate_data_shown %} class="hidden"{% endif %}>{{ pretreatment.condensate_minmax.counter_max }}</td>
+            </tr>
+            </thead>
+            <tbody>
+            {% for condensate_data in pretreatment.condensate_data.all %}
+                <tr>
+                    <td>{{ condensate_data.date }}</td>
+                    <td>{{ condensate_data.operator.username }}</td>
+                    <td></td>
+                    <td {% if "dt" in pretreatment.condensate_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ condensate_data.dt }}</td>
+                    <td {% if "fe" in pretreatment.condensate_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ condensate_data.fe }}</td>
+                    <td {% if "ph" in pretreatment.condensate_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ condensate_data.ph }}</td>
+                    <td {% if "p" in pretreatment.condensate_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ condensate_data.p }}</td>
+                    <td {% if "m" in pretreatment.condensate_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ condensate_data.m }}</td>
+                    <td {% if "cl" in pretreatment.condensate_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ condensate_data.cl }}</td>
+                    <td {% if "fe" in pretreatment.condensate_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ condensate_data.fe }}</td>
+                    <td {% if "cu" in pretreatment.condensate_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ condensate_data.cu }}</td>
+                    <td {% if "temp" in pretreatment.condensate_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ condensate_data.temp }}</td>
+                    <td {% if "counter" in pretreatment.condensate_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ condensate_data.counter }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+
+        </table>
+        <button class="w3-btn bg_bleu_fonce_curatio w3-text-white"
+                        onclick="document.getElementById('data_add_pretreatment_condensate').style.display='block'"><span
+                        class="w3-medium">Ajouter une entrée</span></button>
+    </div>
+
+    <div id="data_add_pretreatment_softener" class="w3-modal" style="display:none">
+                <div class="w3-modal-content">
+                    <div class="w3-container w3-padding-32">
+                        <span onclick="document.getElementById('data_add_pretreatment_softener').style.display='none'"
+                              class="w3-button w3-display-topright w3-text-large w3-red">&times;</span>
+                        <form enctype="multipart/form-data" method="POST" action="{% url 'add_pretreatment_softener_data' %}">
+                            {% csrf_token %}
+                            {% for field in form_softener %}
+                                {% if field.label == 'Pretreatment'%}
+                                    <select name="pretreatment" required id="id_pretreatment" style="display: none">
+                                        <option value="{{ pretreatment.id }}" selected>{{ pretreatment.name }}</option>
+                                    </select>
+                                {% elif field.label == 'Operator' %}
+                                    <select name="operator" required id="id_pretreatment" style="display: none">
+                                        <option value="{{ user.id }}" selected>{{ user.username }}</option>
+                                    </select>
+                                {% elif field.name in pretreatment.softener_data_shown %}
+                                    {{ field.label }}
+                                    {{ field }}
+                                {% endif %}
+
+                            {% endfor %}
+                            <input class="w3-margin" type="submit" value="Ajouter"/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+    <div id="data_add_pretreatment_dealkalizer" class="w3-modal" style="display:none">
+                <div class="w3-modal-content">
+                    <div class="w3-container w3-padding-32">
+                        <span onclick="document.getElementById('data_add_pretreatment_dealkalizer').style.display='none'"
+                              class="w3-button w3-display-topright w3-text-large w3-red">&times;</span>
+                        <form enctype="multipart/form-data" method="POST" action="{% url 'add_pretreatment_dealkalizer_data' %}">
+                            {% csrf_token %}
+                            {% for field in form_dealkalizer %}
+                                {% if field.label == 'Pretreatment'%}
+                                    <select name="pretreatment" required id="id_pretreatment" style="display: none">
+                                        <option value="{{ pretreatment.id }}" selected>{{ pretreatment.name }}</option>
+                                    </select>
+                                {% elif field.label == 'Operator' %}
+                                    <select name="operator" required id="id_pretreatment" style="display: none">
+                                        <option value="{{ user.id }}" selected>{{ user.username }}</option>
+                                    </select>
+                                {% elif field.name in pretreatment.dealkalizer_data_shown %}
+                                    {{ field.label }}
+                                    {{ field }}
+                                {% endif %}
+
+                            {% endfor %}
+                            <input class="w3-margin" type="submit" value="Ajouter"/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+    <div id="data_add_pretreatment_reverse_osmosis" class="w3-modal" style="display:none">
+                <div class="w3-modal-content">
+                    <div class="w3-container w3-padding-32">
+                        <span onclick="document.getElementById('data_add_pretreatment_reverse_osmosis').style.display='none'"
+                              class="w3-button w3-display-topright w3-text-large w3-red">&times;</span>
+                        <form enctype="multipart/form-data" method="POST" action="{% url 'add_pretreatment_reverse_osmosis_data' %}">
+                            {% csrf_token %}
+                            {% for field in form_reverse_osmosis %}
+                                {% if field.label == 'Pretreatment'%}
+                                    <select name="pretreatment" required id="id_pretreatment" style="display: none">
+                                        <option value="{{ pretreatment.id }}" selected>{{ pretreatment.name }}</option>
+                                    </select>
+                                {% elif field.label == 'Operator' %}
+                                    <select name="operator" required id="id_pretreatment" style="display: none">
+                                        <option value="{{ user.id }}" selected>{{ user.username }}</option>
+                                    </select>
+                                {% elif field.name in pretreatment.reverse_osmosis_data_shown %}
+                                    {{ field.label }}
+                                    {{ field }}
+                                {% endif %}
+
+                            {% endfor %}
+                            <input class="w3-margin" type="submit" value="Ajouter"/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+    <div id="data_add_pretreatment_degasser" class="w3-modal" style="display:none">
+                <div class="w3-modal-content">
+                    <div class="w3-container w3-padding-32">
+                        <span onclick="document.getElementById('data_add_pretreatment_degasser').style.display='none'"
+                              class="w3-button w3-display-topright w3-text-large w3-red">&times;</span>
+                        <form enctype="multipart/form-data" method="POST" action="{% url 'add_pretreatment_degasser_data' %}">
+                            {% csrf_token %}
+                            {% for field in form_degasser %}
+                                {% if field.label == 'Pretreatment'%}
+                                    <select name="pretreatment" required id="id_pretreatment" style="display: none">
+                                        <option value="{{ pretreatment.id }}" selected>{{ pretreatment.name }}</option>
+                                    </select>
+                                {% elif field.label == 'Operator' %}
+                                    <select name="operator" required id="id_pretreatment" style="display: none">
+                                        <option value="{{ user.id }}" selected>{{ user.username }}</option>
+                                    </select>
+                                {% elif field.name in pretreatment.degasser_data_shown %}
+                                    {{ field.label }}
+                                    {{ field }}
+                                {% endif %}
+
+                            {% endfor %}
+                            <input class="w3-margin" type="submit" value="Ajouter"/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+    <div id="data_add_pretreatment_mix" class="w3-modal" style="display:none">
+                <div class="w3-modal-content">
+                    <div class="w3-container w3-padding-32">
+                        <span onclick="document.getElementById('data_add_pretreatment_mix').style.display='none'"
+                              class="w3-button w3-display-topright w3-text-large w3-red">&times;</span>
+                        <form enctype="multipart/form-data" method="POST" action="{% url 'add_pretreatment_mix_data' %}">
+                            {% csrf_token %}
+                            {% for field in form_mix %}
+                                {% if field.label == 'Pretreatment'%}
+                                    <select name="pretreatment" required id="id_pretreatment" style="display: none">
+                                        <option value="{{ pretreatment.id }}" selected>{{ pretreatment.name }}</option>
+                                    </select>
+                                {% elif field.label == 'Operator' %}
+                                    <select name="operator" required id="id_pretreatment" style="display: none">
+                                        <option value="{{ user.id }}" selected>{{ user.username }}</option>
+                                    </select>
+                                {% elif field.name in pretreatment.mix_data_shown %}
+                                    {{ field.label }}
+                                    {{ field }}
+                                {% endif %}
+
+                            {% endfor %}
+                            <input class="w3-margin" type="submit" value="Ajouter"/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+    <div id="data_add_pretreatment_condensate" class="w3-modal" style="display:none">
+                <div class="w3-modal-content">
+                    <div class="w3-container w3-padding-32">
+                        <span onclick="document.getElementById('data_add_pretreatment_condensate').style.display='none'"
+                              class="w3-button w3-display-topright w3-text-large w3-red">&times;</span>
+                        <form enctype="multipart/form-data" method="POST" action="{% url 'add_pretreatment_condensate_data' %}">
+                            {% csrf_token %}
+                            {% for field in form_condensate %}
+                                {% if field.label == 'Pretreatment'%}
+                                    <select name="pretreatment" required id="id_pretreatment" style="display: none">
+                                        <option value="{{ pretreatment.id }}" selected>{{ pretreatment.name }}</option>
+                                    </select>
+                                {% elif field.label == 'Operator' %}
+                                    <select name="operator" required id="id_pretreatment" style="display: none">
+                                        <option value="{{ user.id }}" selected>{{ user.username }}</option>
+                                    </select>
+                                {% elif field.name in pretreatment.condensate_data_shown %}
+                                    {{ field.label }}
+                                    {{ field }}
+                                {% endif %}
+
+                            {% endfor %}
+                            <input class="w3-margin" type="submit" value="Ajouter"/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
 
 {% endblock content_eaubelix %}
