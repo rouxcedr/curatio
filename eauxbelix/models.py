@@ -170,7 +170,7 @@ class CondensateMinMax(models.Model):
 
 class Pretreatment(models.Model):
     name = models.CharField(max_length=100)
-    # client = models.OneToOneField(Client, on_delete=models.SET_NULL, null=True)
+    client = models.OneToOneField(Client, on_delete=models.SET_NULL, null=True)
 
     softener_minmax = models.ForeignKey(SoftenerMinMax, on_delete=models.CASCADE)
     dealkalizer_minmax = models.ForeignKey(DealkalizerMinMax, on_delete=models.CASCADE)
