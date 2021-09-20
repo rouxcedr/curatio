@@ -21,9 +21,9 @@
             <!--- Charts and Diagrams -->
             <div id="charts_diagrams_{{ boiler.id }}" class="innertab" style="display:none">
                 <h2>Charte de contrôle</h2>
-                <img src={{ boiler.control_chart }} alt="control_chart" style="width:auto;">
+                <img src={{ boiler.control_chart.url }} alt="control_chart" style="width:auto;">
                 <h2>Schéma d’écoulement</h2>
-                <img src={{ boiler.flow_chart }} alt="flow_diagram" style="width:auto;">
+                <img src={{ boiler.flow_chart.url }} alt="flow_diagram" style="width:auto;">
             </div>
             <!--- Data -->
             <div id="data_{{ boiler.id }}" class="innertab w3-margin-top">
