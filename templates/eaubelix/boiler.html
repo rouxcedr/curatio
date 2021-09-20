@@ -12,7 +12,7 @@
 
     {% for boiler in boilers %}
         <div id="{{ boiler.id }}" class="w3-card w3-white tab w3-padding-large" style="display:none">
-            <button id="{{ boiler.id }}_data_button" class="w3-bar-item w3-button w3-round w3-hover-none innertablink"
+            <button id="{{ boiler.id }}_data_button" class="w3-bar-item w3-button w3-round w3-hover-none innertablink bg_bleu_fonce_curatio"
                     onclick='openTab(event, "data_{{ boiler.id }}", "innertab", "innertablink", "bg_bleu_fonce_curatio")'>
                 <span class="w3-medium">Données</span></button>
             <button class="w3-bar-item w3-button w3-round w3-hover-none innertablink"
@@ -26,7 +26,7 @@
                 <img src={{ boiler.flow_chart.url }} alt="flow_diagram" style="width:auto;">
             </div>
             <!--- Data -->
-            <div id="data_{{ boiler.id }}" class="innertab w3-margin-top bg_bleu_fonce_curatio">
+            <div id="data_{{ boiler.id }}" class="innertab w3-margin-top">
                 <table class="datatable display w3-responsive nowrap" style="width:100%">
                     <thead>
                     <tr>
