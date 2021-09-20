@@ -7,8 +7,23 @@ from core.models import *
 
 from .forms import *
 
+ADMIN_CLIENT = None
 
 # Create your views here.
+@login_required
+@allowed_users(allowed_roles=['ADMIN'])
+def eaubelix_admin(request):
+    users = User.objects.all().filter(type="CLIENT")
+    print(users)
+    return render(request, 'eaubelix/eaubelix_dashboard.html', context={})
+
+@login_required
+@allowed_users(allowed_roles=['ADMIN'])
+def eaubelix_admin_see_client(request):
+
+    pass
+
+
 @login_required
 @allowed_users(allowed_roles=['EAUBELIX'])
 def eaubelix(request):
@@ -17,7 +32,6 @@ def eaubelix(request):
     else:
         client = request.user
     context = {"client": client}
-    print(client.boiler_set.all().order_by('name'))
     return render(request, 'eaubelix/eaubelix_dashboard.html', context)
 
 

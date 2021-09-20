@@ -362,7 +362,7 @@
                 <th rowspan="3">Opérateur</th>
                 <th>Limites</th>
                 <th {% if "dt" not in pretreatment.condensate_data_shown %} class="hidden" {% endif %}>D.T.</th>
-                <th {% if "fe" not in pretreatment.condensate_data_shown %} class="hidden" {% endif %}>Cond</th>
+                <th {% if "cond" not in pretreatment.condensate_data_shown %} class="hidden" {% endif %}>Cond</th>
                 <th {% if "ph" not in pretreatment.condensate_data_shown %} class="hidden" {% endif %}>pH</th>
                 <th {% if "p" not in pretreatment.condensate_data_shown %} class="hidden" {% endif %}>P</th>
                 <th {% if "m" not in pretreatment.condensate_data_shown %} class="hidden" {% endif %}>M</th>
@@ -375,7 +375,7 @@
             <tr>
                 <td>MIN</td>
                 <td {% if "dt" not in pretreatment.condensate_data_shown %} class="hidden"{% endif %}>{{ pretreatment.condensate_minmax.dt_min }}</td>
-                <td {% if "fe" not in pretreatment.condensate_data_shown %} class="hidden"{% endif %}>{{ pretreatment.condensate_minmax.cond_min }}</td>
+                <td {% if "cond" not in pretreatment.condensate_data_shown %} class="hidden"{% endif %}>{{ pretreatment.condensate_minmax.cond_min }}</td>
                 <td {% if "ph" not in pretreatment.condensate_data_shown %} class="hidden"{% endif %}>{{ pretreatment.condensate_minmax.ph_min }}</td>
                 <td {% if "p" not in pretreatment.condensate_data_shown %} class="hidden"{% endif %}>{{ pretreatment.condensate_minmax.p_min }}</td>
                 <td {% if "m" not in pretreatment.condensate_data_shown %} class="hidden"{% endif %}>{{ pretreatment.condensate_minmax.m_min }}</td>
@@ -388,7 +388,7 @@
             <tr>
                 <td>MAX</td>
                 <td {% if "dt" not in pretreatment.condensate_data_shown %} class="hidden"{% endif %}>{{ pretreatment.condensate_minmax.dt_max }}</td>
-                <td {% if "fe" not in pretreatment.condensate_data_shown %} class="hidden"{% endif %}>{{ pretreatment.condensate_minmax.cond_max }}</td>
+                <td {% if "cond" not in pretreatment.condensate_data_shown %} class="hidden"{% endif %}>{{ pretreatment.condensate_minmax.cond_max }}</td>
                 <td {% if "ph" not in pretreatment.condensate_data_shown %} class="hidden"{% endif %}>{{ pretreatment.condensate_minmax.ph_max }}</td>
                 <td {% if "p" not in pretreatment.condensate_data_shown %} class="hidden"{% endif %}>{{ pretreatment.condensate_minmax.p_max }}</td>
                 <td {% if "m" not in pretreatment.condensate_data_shown %} class="hidden"{% endif %}>{{ pretreatment.condensate_minmax.m_max }}</td>
@@ -406,7 +406,7 @@
                     <td>{{ condensate_data.operator.username }}</td>
                     <td></td>
                     <td {% if "dt" in pretreatment.condensate_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ condensate_data.dt }}</td>
-                    <td {% if "fe" in pretreatment.condensate_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ condensate_data.fe }}</td>
+                    <td {% if "cond" in pretreatment.condensate_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ condensate_data.cond }}</td>
                     <td {% if "ph" in pretreatment.condensate_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ condensate_data.ph }}</td>
                     <td {% if "p" in pretreatment.condensate_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ condensate_data.p }}</td>
                     <td {% if "m" in pretreatment.condensate_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ condensate_data.m }}</td>
