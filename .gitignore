@@ -1,2 +1,5 @@
 /venv/
 /Curatio/settings.py
+/core/migrations
+/eauxbelix/migrations
+/formations/migrations
