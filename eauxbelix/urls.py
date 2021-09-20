@@ -3,6 +3,7 @@ from . import views
 
 urlpatterns = [
     path('eaubelix/home', views.eaubelix, name='eaubelix'),
+    path('eaubelix/admin', views.eaubelix_admin, name='eaubelix_admin'),
     path('eaubelix/boilers', views.boiler, name='boilers'),
     path('eaubelix/add_boiler_data', views.add_boiler_data, name='add_boiler_data'),
     path('eaubelix/water_towers', views.water_tower, name='water_towers'),
