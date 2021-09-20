@@ -26,7 +26,7 @@
                 <img src={{ boiler.flow_chart.url }} alt="flow_diagram" style="width:auto;">
             </div>
             <!--- Data -->
-            <div id="data_{{ boiler.id }}" class="innertab w3-margin-top">
+            <div id="data_{{ boiler.id }}" class="innertab w3-margin-top bg_bleu_fonce_curatio">
                 <table class="datatable display w3-responsive nowrap" style="width:100%">
                     <thead>
                     <tr>
@@ -92,7 +92,7 @@
                             <td {% if "cond" in boiler.boiler_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ boiler_data.cond }}</td>
                             <td {% if "pointeaux" in boiler.boiler_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ boiler_data.pointeaux }}</td>
                             <td {% if "mbd" in boiler.boiler_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ boiler_data.mbd }}</td>
-                            <td {% if "on_off" in boiler.boiler_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ boiler_data.on_off }}</td>
+                            <td {% if "on_off" in boiler.boiler_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{% if boiler.min_max.on_off %} ON {% else %} OFF {% endif %}</td>
                             <td {% if "vapor_pound_kg" in boiler.boiler_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ boiler_data.vapor_pound_kg }}</td>
                             <td {% if "vaper_cond" in boiler.boiler_data_shown %} class="hidden"{% endif %}>&nbsp;&nbsp;{{ boiler_data.vaper_cond }}</td>
                         </tr>
