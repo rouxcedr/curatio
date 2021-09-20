@@ -416,8 +416,8 @@ class BoilerControlChart(models.Model):
 class Boiler(models.Model):
     name = models.CharField(max_length=100)
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
-    control_chart = models.ImageField(blank=True)
-    flow_chart = models.ImageField(blank=True)
+    control_chart = models.ImageField(upload_to="boilers/control_charts/", blank=True)
+    flow_chart = models.ImageField(upload_to="boilers/flow_charts/", blank=True)
     min_max = models.ForeignKey(BoilerMinMax, on_delete=models.SET_NULL, null=True)
 
     class BoilerDataShown(models.TextChoices):
