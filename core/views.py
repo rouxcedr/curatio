@@ -13,6 +13,10 @@ def home(request):
     return render(request, 'core/home.html', context)
 
 
+def loginPage(request):
+    context = {}
+    return render(request, 'core/login.html', context)
+
 def loginUser(request):
     if request.method == 'POST':
 

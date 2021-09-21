@@ -59,7 +59,7 @@
             {% else %}
                 <a href="{% url 'home' %}"
                    class="w3-bar-item w3-hide-small w3-hide-medium w3-padding-large w3-button w3-hover-white">Acceuil</a>
-                <a href="{% url 'home' %}"
+                <a href="{% url 'login_page' %}"
                    class="w3-bar-item w3-hide-small w3-hide-medium w3-padding-large w3-button w3-text-blue w3-hover-white">Connexion</a>
             {% endif %}
         </div>
@@ -78,7 +78,7 @@
             <a href="{% url 'logout' %}" class="w3-bar-item w3-button w3-padding-large w3-hover-white w3-text-red">Deconnexion</a>
         {% else %}
             <a href="{% url 'home' %}" class="w3-bar-item w3-button w3-padding-large w3-hover-white">Acceuil</a>
-            <a href="{% url 'home' %}" class="w3-bar-item w3-button w3-padding-large w3-text-blue w3-hover-white">Connexion</a>
+            <a href="{% url 'login_page' %}" class="w3-bar-item w3-button w3-padding-large w3-text-blue w3-hover-white">Connexion</a>
         {% endif %}
     </div>
 </div>
@@ -166,6 +166,7 @@
             $('#{{ display_element_by_id }}_data_button').click();
         });
     {% endif %}
+
 
 
 </script>
