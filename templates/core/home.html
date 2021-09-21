@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<title>W3.CSS Template</title>
+<title>Groupe Curatio</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -75,7 +75,12 @@
     <!-- Navbar on small screens -->
     <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium">
         <a href="{% url 'home' %}" class="w3-bar-item w3-button" onclick="toggleFunction()">ACCUEIL</a>
-        <a href="{% url 'login_page' %}" class="w3-bar-item w3-button" onclick="toggleFunction()">CONNEXION</a>
+        {% if request.user.is_authenticated %}
+            <a href="{% url 'eaubelix' %}" class="w3-bar-item w3-button" onclick="toggleFunction()">EAU-BELIX</a>
+            <a href="{% url 'formations' %}" class="w3-bar-item w3-button" onclick="toggleFunction()">FORMATIONS</a>
+        {% else %}
+            <a href="{% url 'login_page' %}" class="w3-bar-item w3-button" onclick="toggleFunction()">CONNEXION</a>
+        {% endif %}
     </div>
 </div>
 
@@ -103,7 +108,7 @@
         <!-- Hide this text on small devices -->
         <div class="w3-col m6 w3-hide-small w3-padding-large">
             <p>Groupe Curatio est une entreprise familiale vous offrant un vaste éventail d'expertise dans le domaine de
-                traitement d'eau. En choisisant de faire affaire avec nous, vous garantisez un service professionel, de
+                traitement d'eau. En choisisant de faire affaire avec nous, vous vous garantisez un service professionel, de
                 qualité, tout en restant humain.
             </p>
         </div>
@@ -139,8 +144,8 @@
 <!-- Container (Portfolio Section) -->
 <div class="w3-content w3-container w3-padding-64" id="portfolio">
     <h3 class="w3-center">Notre expertise</h3>
-    <p class="w3-center"><em>Groupe Curatio vous offre une expertise de pointe dans diverse secteur, tel qu'en<br>
-        Optimisation de traitement d'eau / Économie de réactif / Formation d'opérateur / Analyse de données instantannés</em>
+    <p class="w3-center"><em>Groupe Curatio vous offre une expertise de pointe dans diverses secteurs, tel qu'en<br>
+        Optimisation de traitement d'eau / Économie de réactifs / Formation d'opérateur / Analyse de données instantannés</em>
     </p><br>
 
     <!-- Responsive Grid. Four columns on tablets, laptops and desktops. Will stack on mobile devices/small screens (100% width) -->
