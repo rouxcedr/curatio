@@ -39,6 +39,7 @@ class BoilerDataForm(forms.ModelForm):
             {'class': 'w3-input w3-border w3-round w3-border-black'})
         self.fields['on_off'].widget.attrs.update(
             {'class': 'w3-input w3-border w3-round w3-border-black'})
+        self.fields['on_off'].widget.choices = ((None, "Unknown"), (True, "ON"), (False, "OFF"))
         self.fields['vapor_pound_kg'].widget.attrs.update(
             {'class': 'w3-input w3-border w3-round w3-border-black'})
         self.fields['vaper_cond'].widget.attrs.update(
