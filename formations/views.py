@@ -9,7 +9,8 @@ import time
 @allowed_users(allowed_roles=['FORMATION'])
 def formations(request):
     form = FormationsForm()
-    sections = ({'id': 'ANALYSIS', 'name': "Analyses", 'formations': Formation.objects.filter(section='ANALYSIS')},
+    sections = ({'id': 'GENERAL_CONCEPTS', 'name': "Concept Généraux", 'formations': Formation.objects.filter(section='GENERAL_CONCEPTS')},
+                {'id': 'ANALYSIS', 'name': "Analyses", 'formations': Formation.objects.filter(section='ANALYSIS')},
                 {'id': 'PRETREATMENT', 'name': "Prétraitement", 'formations': Formation.objects.filter(section='PRETREATMENT')},
                 {'id': 'CHEMICAL_TREATMENT', 'name': "Traitement Chimique", 'formations': Formation.objects.filter(section='CHEMICAL_TREATMENT')},
                 {'id': 'CONTROL', 'name': "Controle", 'formations': Formation.objects.filter(section='CONTROL')},
