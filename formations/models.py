@@ -25,7 +25,7 @@ class Formation(models.Model):
 
     @property
     def video_relative_path(self):
-        return self.flag.replace("/home/grouewze/public_html", "")
+        return self.video.replace("/home/grouewze/public_html", "")
 
     def __str__(self):
         return self.title
