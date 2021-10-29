@@ -22,8 +22,10 @@ class Formation(models.Model):
     section = models.CharField('Section', max_length=255, choices=Sections.choices, default=Sections.ANALYSIS, null=True)
     date_posted = models.DateTimeField(default=timezone.now)
     video = models.FilePathField(path="/home/grouewze/public_html/media/video_formations", recursive=True)
-    video.path = video.path.replace("/home/grouewze/public_html", "")
 
+    @property
+    def video_relative_path(self):
+        return self.flag.replace("/home/grouewze/public_html", "")
 
     def __str__(self):
         return self.title
