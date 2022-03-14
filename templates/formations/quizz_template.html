@@ -1,0 +1,102 @@
+{% extends  "core/base.html" %}
+{% block content %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card shadow rounded rounded-3">
+                    <div class="card-header py-3">
+                        <h4 class="text-primary m-0 fw-bold">{{ training_course.name }} - {{ training_course.title }}</h4>
+                    </div>
+                    <div class="progress rounded-0 progress-sm mb-3">
+                        <div class="progress-bar bg-info rounded-0" aria-valuenow="{{ progression }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ progression }}%;"><span class="visually-hidden">{{ progression }}%</span></div>
+                    </div>
+
+                    <div class="card-body">
+
+                        <div id="quiz" class="rounded rounded-3">
+                            <div id="quiz-header">
+                            </div>
+
+                            <div id="quiz-start-screen">
+                                <p>Appuyer sur le boutton pour commencer l'examen</p>
+                                <div><a href="#" id="quiz-start-btn" class="btn btn-primary bg-primary text-white shadow border-3">Commencer</a></div>
+                            </div>
+
+                            <div id="quiz-gameover-screen">
+                                <p id="quiz-gameover-response"></p>
+                                <p><a href="#" id="quiz-retry-btn">Recommencer</a></p>
+                            </div>
+                        </div>
+
+                        <a href="{% url 'training_course_video_page' training_course_pk=training_course.pk training_video_pk=previous_video.pk %}" class="btn btn-primary float-start" type="button"
+                            style="text-align: right;background: var(--bs-success);border-color: var(--bs-success);">Précédent
+                        </a>
+
+                        {% if next_video %}
+                            <a href="{% url 'finish_video_quizz' training_course_pk=training_course.pk training_video_pk=next_video.pk %}" id="next_video" class="btn btn-primary float-end" type="button"
+                                style="text-align: right;background: var(--bs-success);border-color: var(--bs-success);display: none;">Suivant
+                            </a>
+                        {% else %}
+                            <a href="{% url 'finish_training_course' training_course_pk=training_course.pk %}" id="next_video" class="btn btn-primary float-end" type="button"
+                                style="text-align: right;background: var(--bs-success);border-color: var(--bs-success);display: none;">Retour au Formations
+                            </a>
+                        {% endif %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock content %}
+
+{% block scripts %}
+
+    <script>
+
+        var totalScore = 0;
+
+        // Provide an answer callback to add points to the score if correct answer selected.
+        var answerCallback = function (currentQuestion, selected, question) {
+            // Check if the user got the answer correct.
+            if (selected === question.correctIndex) {
+                // Add the points as specified in the question parameters, or default to 1.
+                totalScore += question.points || 1;
+            }
+        };
+
+        // Provide a callback to reset the score. Used if the home button is clicked.
+        var resetScore = function () {
+            totalScore = 0;
+        };
+
+        // Provide a finish callback to display the score.
+        var finishCallback = function () {
+            if (totalScore >= {{ video_quizz.good_answer_to_pass }} ) {
+                $('#quiz-results').html('Vous avez réussis! Vous avez eu ' + totalScore + ' bonne réponse.');
+                $('#next_video').show();
+            }
+            else{
+                 $('#quiz-results').html('Réésayez, vous avez eu ' + totalScore + ' bonne réponse. Ils vous en faut {{ video_quizz.good_answer_to_pass }} pour passer.');
+            }
+
+            // Be sure to reset the score.
+            totalScore = 0;
+        };
+
+        $('#quiz').quiz({
+            //resultsScreen: '#results-screen',
+            // Specify answer callback.
+            answerCallback: answerCallback,
+            // Specify finish callback.
+            finishCallback: finishCallback,
+            // Specify callback to reset score.
+            // homeButton: '#custom-home',
+            counterFormat: 'Question %current sur %total',
+            questions: {{ questions|safe }}
+        });
+    </script>
+
+{% endblock %}

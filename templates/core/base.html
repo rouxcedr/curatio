@@ -1,26 +1,22 @@
 <!DOCTYPE html>
-<html lang="fr">
-
+<html>
+{% load static %}
+{% load widget_tweaks %}
 <head>
-    {% load static %}
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Groupe Curatio</title>
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    {#    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>#}
-    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
-    <script src="https://kit.fontawesome.com/4bd1afbea6.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'bootstrap_template/assets/bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static 'bootstrap_template/assets/fonts/fontawesome5-overrides.min.css' %}">
 
-    <link rel="stylesheet" type="text/css"
-          href="https://cdn.datatables.net/v/dt/jq-3.3.1/jszip-2.5.0/dt-1.10.24/b-1.7.0/b-colvis-1.7.0/b-html5-1.7.0/fh-3.1.8/r-2.2.7/sc-2.0.3/sl-1.3.2/datatables.min.css"/>
+    <!--QUIZZ-->
+    <link rel="stylesheet" type="text/css" href="{% static 'quizz/jquery.quiz-min.css' %}"/>
 
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
-    <script type="text/javascript"
-            src="https://cdn.datatables.net/v/dt/jq-3.3.1/jszip-2.5.0/dt-1.10.24/b-1.7.0/b-colvis-1.7.0/b-html5-1.7.0/fh-3.1.8/r-2.2.7/sc-2.0.3/sl-1.3.2/datatables.min.js"></script>
-
-    <link rel="stylesheet" type="text/css" href="{% static 'core/style.css' %}">
-
+    <!--TAB ICONS-->
     <link rel="apple-touch-icon" sizes="180x180" href="/media/tab_icons/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/media/tab_icons/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/media/tab_icons/favicon-16x16.png">
@@ -30,155 +26,198 @@
     <meta name="theme-color" content="#ffffff">
 </head>
 
-<body class="bg_bleu_pale_curatio" style="font-family: Montserrat">
-<!-- Navbar (sit on top) -->
-<div class="w3-top w3-margin-bottom">
-    <div class="w3-bar w3-white w3-large w3-padding w3-card">
-        <a href="{% url 'home' %}" class="w3-bar-item w3-wide w3-button w3-padding-large w3-hover-white"><b>Curatio</b></a>
-        <!-- Float links to the right. Hide them on small screens -->
-        <div class="w3-right w3-hide-small">
-            {% if request.user.is_authenticated %}
-                <a href="{% url 'eaubelix' %}"
-                   class="w3-bar-item w3-hide-small w3-hide-medium w3-padding-large w3-button w3-hover-white">Eaux-Belix</a>
-                <a href="{% url 'formations' %}"
-                   class="w3-bar-item w3-hide-small w3-hide-medium w3-padding-large w3-button w3-hover-white">Formations</a>
+<body id="page-top">
+<div id="wrapper">
+    <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
+        <div class="container-fluid d-flex flex-column p-0"><a
+                class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0"
+                href="{% url 'home' %}">
+            <div class="sidebar-brand-icon"><img src="/media/tab_icons/favicon-32x32.png"></div>
+            <div class="sidebar-brand-text mx-3"><span>Curatio</span></div>
+        </a>
 
-                <div class="w3-dropdown-click" style="padding: 0px; margin: 0px;">
-                    <button onclick="smallNavigation('account_options')"
-                            class="w3-hide-small w3-hide-medium w3-block w3-padding-large bg_bleu_fonce_curatio w3-text-white w3-hover-white"
-                            style="margin-right: 15px;">
-                        Mon Compte
-                    </button>
-                    <div id="account_options" class="w3-dropdown-content w3-bar-block w3-hover-white">
-                        {% if request.user.type == "CLIENT" %}
-                            <a href="{% url 'operators' %}"
-                               class="w3-bar-item w3-hide-small w3-hide-medium w3-small w3-button w3-hover-white"><i
-                                    class="fa fa-users"></i> Gestion des opérateurs </a>
-                        {% endif %}
-                        <a href="{% url 'password_reset' %}"
-                           class="w3-bar-item w3-hide-small w3-hide-medium w3-button w3-small w3-hover-white"><i
-                                class="fas fa-key"></i> Changer
-                            de Mot de Passe</a>
-                        <a href="{% url 'logout' %}"
-                           class="w3-bar-item w3-hide-small w3-hide-medium w3-button w3-text-red w3-hover-white"><i
-                                class="fas fa-lock"></i> Deconnexion</a>
-                    </div>
-                </div>
-            {% else %}
-                <a href="{% url 'home' %}"
-                   class="w3-bar-item w3-hide-small w3-hide-medium w3-padding-large w3-button w3-hover-white">Acceuil</a>
-                <a href="{% url 'login_page' %}"
-                   class="w3-bar-item w3-hide-small w3-hide-medium w3-padding-large w3-button w3-text-blue w3-hover-white">Connexion</a>
-            {% endif %}
+            <hr class="sidebar-divider my-0">
+
+            <ul class="navbar-nav text-light" id="accordionSidebar">
+                {% if request.user.is_authenticated %}
+                    <li class="nav-item"><a class="nav-link {% if nbar == 'home' %}active{% endif %}"
+                                            href="{% url 'home' %}"><i class="fas fa-home"></i></i>
+                        <span>Page d'accueil</span></a></li>
+                    <li class="nav-item"><a class="nav-link {% if nbar == 'formations' %}active{% endif %}"
+                                            href="{% url 'training_courses' %}"><i
+                            class="fab fa-leanpub"></i><span>Formations</span></a></li>
+                    <li class="nav-item"><a class="nav-link {% if nbar == 'profile' %}active{% endif %}"
+                                            href="{% url 'profile_page' %}"><i
+                            class="fas fa-user"></i><span>Profile</span></a></li>
+                    <li class="nav-item"><a class="nav-link " href="{% url 'logout' %}"><i
+                            class="far fa-user-circle"></i><span>Logout</span></a></li>
+                {% else %}
+                    <li class="nav-item"><a class="nav-link {% if nbar == 'home' %}active{% endif %}"
+                                            href="{% url 'home' %}"><i
+                            class="fab fa-leanpub"></i><span>Page d'accueil</span></a></li>
+                    <li class="nav-item"><a class="nav-link {% if nbar == 'login' %}active{% endif %}"
+                                            href="{% url 'login_page' %}"><i
+                            class="far fa-user-circle"></i><span>Login</span></a></li>
+                {% endif %}
+
+            </ul>
+            <div class="text-center d-none d-md-inline">
+                <button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button>
+            </div>
         </div>
-        <a class="w3-bar-item w3-button w3-hide-large w3-right w3-padding-large w3-hover-white w3-large"
-           href="javascript:void(0);" onclick="smallNavigation('navSmall')" title="Ouvrir la navigation"><i
-                class="fa fa-bars"></i></a>
-    </div>
+    </nav>
 
+    <div class="d-flex flex-column" id="content-wrapper">
+        <div id="content">
+            <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
+                <div class="container-fluid">
+                    <button class="btn btn-link d-md-none rounded-circle me-3" id="sidebarToggleTop" type="button"><i
+                            class="fas fa-bars"></i></button>
 
-    <!-- Navbar on small screens -->
-    <div id="navSmall" class="w3-bar-block w3-white w3-large w3-hide w3-hide-large w3-padding ">
-        {% if request.user.is_authenticated %}
-            <a href="{% url 'eaubelix' %}" class="w3-bar-item w3-button w3-padding-large w3-hover-white">Eaux-Belix</a>
-            <a href="{% url 'formations' %}"
-               class="w3-bar-item w3-button w3-padding-large w3-hover-white">Formations</a>
-            <a href="{% url 'logout' %}" class="w3-bar-item w3-button w3-padding-large w3-hover-white w3-text-red">Deconnexion</a>
-        {% else %}
-            <a href="{% url 'home' %}" class="w3-bar-item w3-button w3-padding-large w3-hover-white">Acceuil</a>
-            <a href="{% url 'login_page' %}" class="w3-bar-item w3-button w3-padding-large w3-text-blue w3-hover-white">Connexion</a>
-        {% endif %}
+                    <div class="d-none d-sm-block"></div>
+                    <ul class="navbar-nav flex-nowrap ms-auto">
+                        <li class="nav-item dropdown no-arrow">
+                            <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link"
+                                                                       aria-expanded="false" data-bs-toggle="dropdown"
+                                                                       href="#"><span
+                                    class="d-none d-lg-inline me-2 text-gray-600 small">{{ request.user.first_name }} {{ request.user.last_name }}</span><img
+                                    class="border rounded-circle img-profile"
+                                    src="/media/formation_image/stock_profile_Curatio6.png"></a>
+                                <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in"><a
+                                        class="dropdown-item" href="{% url 'profile_page' %}"><i
+                                        class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Profile</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="{% url 'logout' %}"><i
+                                            class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Logout</a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+
+                </div>
+            </nav>
+            <div class="container-fluid">
+
+                {% if messages %}
+
+                    {% for message in messages %}
+
+                        <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                            <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                            </symbol>
+                            <symbol id="info-fill" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+                            </symbol>
+                            <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                            </symbol>
+                        </svg>
+
+                        {% if message.tags == 'info' %}
+
+                            <div class="alert alert-primary d-flex align-items-center" role="alert">
+                                <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:">
+                                    <use xlink:href="#info-fill"/>
+                                </svg>
+                                <div>
+                                    {{ message }}
+                                </div>
+                            </div>
+
+                        {% elif message.tags == 'success' %}
+                            <div class="alert alert-success d-flex align-items-center" role="alert">
+                                <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img"
+                                     aria-label="Success:">
+                                    <use xlink:href="#check-circle-fill"/>
+                                </svg>
+                                <div>
+                                    {{ message }}
+                                </div>
+                            </div>
+
+                        {% elif message.tags == 'warning' %}
+                            <div class="alert alert-warning d-flex align-items-center" role="alert">
+                                <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img"
+                                     aria-label="Warning:">
+                                    <use xlink:href="#exclamation-triangle-fill"/>
+                                </svg>
+                                <div>
+                                    {{ message }}
+                                </div>
+                            </div>
+
+                        {% elif message.tags == 'error' %}
+                            <div class="alert alert-danger d-flex align-items-center" role="alert">
+                                <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img"
+                                     aria-label="Danger:">
+                                    <use xlink:href="#exclamation-triangle-fill"/>
+                                </svg>
+                                <div>
+                                    {{ message }}
+                                </div>
+                            </div>
+
+                        {% endif %}
+                    {% endfor %}
+
+                {% endif %}
+
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+
+        <footer class="bg-white sticky-footer">
+            <div class="container my-auto">
+                <div class="text-center my-auto copyright"><span>Copyright © Groupe Curatio 2022</span></div>
+            </div>
+        </footer>
     </div>
+    <a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
 </div>
-<div style="padding-top: 71px; padding-bottom: 71px;">
-    {% block content %}{% endblock %}
-</div>
+
+<!-- JQuery-->
+<script src=" https://code.jquery.com/jquery-3.5.1.js"></script>
+
+<!--For basic theme-->
+<script rel="stylesheet" src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{% static 'bootstrap_template/assets/js/theme.js' %}"></script>
+
+<!--For Charts-->
+<script rel="stylesheet" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
+<script src="{% static 'bootstrap_template/assets/js/bs-init.js' %}"></script>
+
+<!--For Quizz-->
+<script src="{% static 'quizz/jquery.quiz-min.js' %}"></script>
+
+<!-- For DataTables -->
+<script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script>
 
 <script>
-    // Used to toggle the menu on small screens when clicking on the menu button
-    function smallNavigation(id) {
-        var x = document.getElementById(id);
-        if (x.className.indexOf("w3-show") == -1) {
-            x.className += " w3-show";
-        } else {
-            x.className = x.className.replace(" w3-show", "");
-        }
-    }
-
-
-    // Get the Sidebar Eaubelix
-    var sideBarDashboard = document.getElementById("sideBarDashboard");
-
-    // Get the DIV with overlay effect
-    var overlayBg = document.getElementById("myOverlay");
-
-    // Toggle between showing and hiding the sidebar, and add overlay effect
-    function open_sideBarDashboard() {
-        if (sideBarDashboard.style.display === 'block') {
-            sideBarDashboard.style.display = 'none';
-            overlayBg.style.display = "none";
-        } else {
-            sideBarDashboard.style.display = 'block';
-            overlayBg.style.display = "block";
-        }
-    }
-
-    // Close the sidebar with the close button
-    function close_sideBarDashboard() {
-        sideBarDashboard.style.display = "none";
-        overlayBg.style.display = "none";
-    }
-
-    function openTab(evt, id, tabs, tabslink, bg_color) {
-        var i;
-        var x = document.getElementsByClassName(tabs);
-        for (i = 0; i < x.length; i++) {
-            x[i].style.display = "none";
-        }
-        tablinks = document.getElementsByClassName(tabslink);
-        for (i = 0; i < x.length; i++) {
-            tablinks[i].className = tablinks[i].className.replace(bg_color, "");
-            console.log(bg_color)
-            if(bg_color == "bg_bleu_fonce_curatio"){
-                tablinks[i].className = tablinks[i].className.replace("w3-text-white", "");
-            }
-        }
-        document.getElementById(id).style.display = "block";
-        evt.currentTarget.className += (" " + bg_color);
-        if(bg_color == "bg_bleu_fonce_curatio"){
-             evt.currentTarget.className += (" " + "w3-text-white");
-        }
-    }
-
     $(document).ready(function () {
-        var datatable = $('table.datatable').DataTable({
+        var dataTable = $('#dataTable').DataTable({
             rowReorder: true,
             columnDefs: [
-                {orderable: true, className: 'reorder', targets: 0},
                 {orderable: false, targets: '_all'},
             ],
-            "searching": false,
+            "searching": true,
             language: {
                 url: 'https://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/French.json'
-            }
+            },
+
         });
 
-        datatable.columns('.hidden').visible(false);
+        dataTable.on('draw', function () {
+            console.log("Drawn")
+            $('#dataTable_filter').addClass('float-end');
+            $('#dataTable_paginate').addClass('float-end');
+        });
+
     });
-
-    {% if display_element_by_id %}
-        $(document).ready(function () {
-            $('#{{ display_element_by_id }}_button').click();
-        });
-        $(document).ready(function () {
-            $('#{{ display_element_by_id }}_data_button').click();
-        });
-    {% endif %}
-
-
-
 </script>
 
+{% block scripts %}{% endblock %}
 </body>
 
 </html>

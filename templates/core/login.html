@@ -1,23 +1,38 @@
 {% extends  "core/base.html" %}
 {% block content %}
 
-    <div class="w3-quarter"><p></p></div>
-    <form class="w3-container w3-half w3-center w3-xlarge center_vertically" method="POST"
-          action="{% url 'login' %}">
-        {% csrf_token %}
-        <div class="w3-section">
-            <input class="w3-input w3-border-black w3-margin-bottom w3-round " type="text"
-                   placeholder="Nom d'utilisateur"
-                   name="username" required>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-9 col-lg-12 col-xl-10">
+                <div class="card shadow-lg o-hidden border-0 my-5">
+                    <div class="card-body p-0">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="p-5">
+                                    <div class="text-center">
+                                        <h4 class="text-dark mb-4">Connexion</h4>
+                                    </div>
 
-            <input class="w3-input w3-border w3-round " type="password" placeholder="Mot de passe"
-                   name="password"
-                   required>
-            <button class="w3-button w3-block w3-section w3-hover-white w3-padding w3-round w3-white"
-                    type="submit">Connexion
-            </button>
+                                    <form class="user" method="POST" action="{% url 'login' %}">
+                                        {% csrf_token %}
+                                        <div class="mb-3"><input class="form-control form-control-user" type="text" id="username" aria-describedby="username" placeholder="Entrer votre nom d'utilisateur" name="username"></div>
+                                        <div class="mb-3"><input class="form-control form-control-user" type="password" id="password" placeholder="Mot de passe" name="password"></div>
+                                        <button class="btn btn-primary d-block btn-user w-100" type="submit">Connexion</button>
+
+                                    </form>
+                                    <hr>
+                                    <div class="text-center"><a class="small" href="{% url 'forgot_username' %}">Oublier votre nom d'utilisateur?</a></div>
+                                    <div class="text-center"><a class="small" href="{% url 'password_reset' %}">Oublier votre mot de passe?</a></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 d-none d-lg-flex">
+                                <div class="flex-grow-1 bg-login-image" style="background-image: url(/media/home_page/Employé_Tuyau.jpg);"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </form>
-    <div class="w3-quarter"><p></p></div>
+    </div>
 
 {% endblock content %}

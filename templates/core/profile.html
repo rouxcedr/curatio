@@ -1,0 +1,147 @@
+{% extends  "core/base.html" %}
+{% block content %}
+    {% load widget_tweaks %}
+
+    <div class="d-flex flex-column" id="content-wrapper">
+        <div id="content">
+            <div class="container-fluid">
+                <h3 class="text-dark mb-4">Profile</h3>
+                <div class="row mb-3">
+                    <!-- FORMATION CARD PROGRESSION -->
+                    <div class="col-lg-4">
+                        <div class="card mb-3">
+                            <div class="card-body text-center shadow"><img class="rounded-circle mb-3 mt-4"
+                                                                           src="/media/formation_image/stock_profile_Curatio6.png"
+                                                                           width="160" height="160">
+                                <div class="mb-3">
+                                    <button class="btn btn-primary btn-sm" type="button">Change Photo</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="text-primary fw-bold m-0">Formation</h6>
+                            </div>
+                            <div class="card-body">
+                                {% for training_video in training_videos %}
+                                    <h4 class="small fw-bold">{{ training_video.video }}
+
+                                            {% if training_video.video_order <= request.user.user_formation_tracking.test_completed %}
+                                                <span class="float-end text-success">COMPLÉTÉ</span>
+                                            {% else %}
+                                                <span class="float-end text-danger">NON COMPLÉTÉ</span>
+                                            {% endif %}
+
+                                    </h4>
+                                {% endfor %}
+                                <hr>
+                                <h4 class="small fw-bold">Progression<span class="float-end">{{ progression }}%</span></h4>
+                                <div class="progress progress-sm mb-3">
+                                       <div class="progress-bar bg-primary" aria-valuenow="{{ progression }}" aria-valuemin="0"
+                                             aria-valuemax="100" style="width: {{ progression }}%;"><span
+                                                class="visually-hidden">{{ progression }}%</span>
+                                       </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-8">
+                        <div class="row">
+                            <div class="col">
+                                <div class="card shadow mb-3">
+                                    <div class="card-header py-3">
+                                        <p class="text-primary m-0 fw-bold">Paramètres utilisateur</p>
+                                    </div>
+                                    <div class="card-body">
+                                        <form>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="mb-3"><label class="form-label" for="username"><strong>Nom d'utilisateur</strong></label><input
+                                                            class="form-control" type="text" id="username"
+                                                            value="{{ request.user.username }}" name="username"></div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="mb-3"><label class="form-label" for="email"><strong>Email
+                                                        Address</strong></label><input class="form-control" type="email"
+                                                                                       id="email"
+                                                                                       value="{{ request.user.email }}"
+                                                                                       name="email"></div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="mb-3"><label class="form-label"
+                                                                             for="first_name"><strong>Prénom</strong></label><input class="form-control" type="text"
+                                                                                    id="first_name" value="{{ request.user.first_name }}"
+                                                                                    name="first_name"></div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="mb-3"><label class="form-label" for="last_name"><strong>Nom de famille</strong></label><input class="form-control" type="text"
+                                                                                    id="last_name" value="{{ request.user.last_name }}"
+                                                                                    name="last_name"></div>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <button class="btn btn-primary btn-sm" type="submit">Sauvegarder
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% if request.user.type == "CLIENT" %}
+                            <div class="card shadow mb-3">
+                                <div class="card-header py-3">
+                                    <h6 class="text-primary fw-bold m-0">Opérateurs</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="dataTable">
+                                            <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Email</th>
+                                                <th>Formation</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for operator in operators %}
+                                                <tr>
+                                                <td>{{ operator.first_name }} {{ operator.last_name }}</td>
+                                                <td>{{ operator.email }}</td>
+                                                <td>{{ operator.user_formation_tracking.get_progression_percentage }}%</td>
+                                            </tr>
+                                            {% endfor %}
+
+
+
+                                            </tbody>
+                                        </table>
+
+
+                                        <form method="POST" action="{% url 'send_operator_registration_email' %}">
+                                            {% csrf_token %}
+                                            <div class="mb-3"><label class="form-label" for="email"><strong>Email du Nouvel Opérateur</strong></label>
+                                                {{ operateur_form.email|add_class:"form-control" }}
+                                            </div>
+                                            <div class="mb-3">
+                                                <button class="btn btn-primary btn-sm" type="submit">Envoyer un Email</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                        {% endif %}
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

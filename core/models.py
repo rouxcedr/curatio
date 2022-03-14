@@ -16,6 +16,8 @@ class User(AbstractUser):
         OPERATOR = 'OPERATOR', "Opérateur"
 
     type = models.CharField('Type', max_length=50, choices=Types.choices, default=Types.OPERATOR)
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
 
     def get_absolute_url(self):
         return reverse('users:detail', kwargs={'username': self.username})
@@ -90,6 +92,9 @@ class ClientMore(models.Model):
     subscription = ArrayField(
         models.CharField('Subscriptions', max_length=255, choices=Subscriptions.choices, default=None, null=True), null=True, blank=True
     )
+    company = models.CharField("Company", max_length=255, null=True)
+    max_operator = models.IntegerField("Max_Operator", null=True)
+
 
     class Meta:
         verbose_name_plural = "Clients Data"

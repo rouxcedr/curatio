@@ -14,15 +14,15 @@
                             <div class="col-lg-6">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h4 class="text-dark mb-2">Mot de passe oublié?</h4>
-                                        <p class="mb-4">C'est des choses qui arrive. Entrez simplement votre adresse e-mail ci-dessous et nous vous enverrons un lien pour réinitialiser votre mot de passe!</p>
+                                        <h4 class="text-dark mb-2">Nom d'utilisateur oublié?</h4>
+                                        <p class="mb-4">Entrez simplement votre adresse e-mail ci-dessous et nous vous enverrons votre nom d'utilisateur.</p>
                                     </div>
                                     <form class="user" method="POST">
                                         {% csrf_token %}
                                         <div class="mb-3">
-                                            {{ password_reset_form.email|add_class:"form-control form-control-user"}}
+                                            {{ email_form.email|add_class:"form-control form-control-user"}}
                                         </div>
-                                        <button class="btn btn-primary d-block btn-user w-100" type="submit">Réinitialiser le mot de passe</button>
+                                        <button class="btn btn-primary d-block btn-user w-100" type="submit">Récupérer le nom d'utilisateur</button>
                                     </form>
                                     <div class="text-center"><a class="small" href="{% url 'login_page' %}">Connexion</a></div>
                                 </div>

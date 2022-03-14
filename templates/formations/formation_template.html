@@ -1,0 +1,43 @@
+{% extends  "core/base.html" %}
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card shadow rounded rounded-3">
+                <div class="card-header py-3">
+                    <h4 class="text-primary m-0 fw-bold">{{ training_course.name}} - {{ training_course.title }}</h4>
+
+                </div>
+                <div class="progress rounded-0 progress-sm mb-3">
+                    <div class="progress-bar bg-info rounded-0" aria-valuenow="{{ progression }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ progression }}%;"><span class="visually-hidden">{{ progression }}%</span></div>
+                </div>
+
+                <div class="card-body ">
+
+                    <div class="card center" style="width: 80%;margin-right: 10%;margin-left: 10%">
+                        <video class="embed-responsive-item" src="{{ training_video.video.video_relative_path }}" controls>
+
+                        </video>
+                    </div>
+
+{#                    <hr>#}
+{#                    <p class="card-text">{{ training_course.description }}</p>#}
+{##}
+                    <hr>
+{#                    <p class="card-text">Support théorique :&nbsp;<a href="#">Link</a></p>#}
+
+                    {% if training_video.video_order != 1 %}
+                        <a href="{% url 'video_quizz_page' training_course_pk=training_course.pk video_quizz_pk=previous_video_quizz.pk %}" class="btn btn-primary float-start" type="button" style="text-align: right;background: var(--bs-success);border-color: var(--bs-success);">Précédent</a>
+                    {% else %}
+                        <a href="{% url 'training_courses' %}" class="btn btn-primary float-start" type="button" style="text-align: right;background: var(--bs-success);border-color: var(--bs-success);">Retour</a>
+                    {% endif %}
+                    <a href="{% url 'video_quizz_page' training_course_pk=training_course.pk video_quizz_pk=training_video.video.video_quizz.pk %}" class="btn btn-primary float-end" type="button" style="text-align: right;background: var(--bs-success);border-color: var(--bs-success);">Suivant</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}

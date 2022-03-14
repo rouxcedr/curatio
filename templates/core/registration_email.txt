@@ -1,0 +1,11 @@
+{% autoescape off %}
+Bonjour,
+
+Cliquez sur le lien ci-dessous pour vous créer un compte.
+
+{{ protocol }}://{{ domain }}{% url 'register_page' data=url_param %}
+
+Sincèrement,
+Groupe Curatio
+
+{% endautoescape %}

@@ -1,6 +1,8 @@
 from django import forms
 from .models import *
 from django.utils.datastructures import MultiValueDict
+from django.contrib.auth.forms import UserCreationForm
+
 
 class ArrayFieldSelectMultiple(forms.CheckboxSelectMultiple):
     """This is a Form Widget for use with a Postgres ArrayField. It implements
@@ -30,6 +32,26 @@ class ArrayFieldSelectMultiple(forms.CheckboxSelectMultiple):
         return data.get(name, None)
 
 
+class NewUserForm(UserCreationForm):
+    email = forms.EmailField(required=True)
+    type = forms.CharField(required=True)
+    first_name = forms.CharField(required=True)
+    last_name = forms.CharField(required=True)
+
+    class Meta:
+        model = User
+        fields = ("username", "password1", "password2", "email", "type", "first_name", "last_name")
+
+    def save(self, commit=True):
+        user = super(NewUserForm, self).save(commit=False)
+        user.email = self.cleaned_data['email']
+        user.type = self.cleaned_data['type']
+        user.first_name = self.cleaned_data['first_name']
+        user.last_name = self.cleaned_data['last_name']
+
+        if commit:
+            user.save()
+        return user
 
 
 class ClientMoreForm(forms.ModelForm):
@@ -37,10 +59,15 @@ class ClientMoreForm(forms.ModelForm):
         model = ClientMore
         widgets = {
             'subscription': ArrayFieldSelectMultiple(choices=ClientMore.Subscriptions.choices),
+
             # 'boiler_data_shown': ArrayFieldSelectMultiple(choices=ClientMore.BOILER_DATA_CHOICES)
         }
         fields = '__all__'  # required for Django 3.x
 
+
+
+class EmailForm(forms.Form):
+    email = forms.EmailField(required=True)
 
 
 

@@ -22,7 +22,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('core.urls')),
     path('', include('formations.urls')),
-    path('', include('eauxbelix.urls')),
 ]
 
 if settings.DEBUG:

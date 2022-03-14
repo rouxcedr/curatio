@@ -1,47 +1,101 @@
 {% extends  "core/base.html" %}
 {% block content %}
 
-{#    {% if user.is_superuser %}#}
-{#        <div class="w3-container bg_gris_clair_curatio">#}
-{#            <form enctype="multipart/form-data" method="POST" action="{% url 'upload_formation' %}">#}
-{#                {% csrf_token %}#}
-{#                {{ formations_form.as_p }}#}
-{#                <input class="w3-margin" type="submit" value="Upload"/>#}
-{#            </form>#}
-{#        </div>#}
-{##}
-{#    {% endif %}#}
+    <div class="container">
+        <div class="row">
+            {% if client_training_course is not None %}
 
-    <div class="w3-bar w3-xlarge bg_bleu_fonce_curatio w3-text-white">
-        {% for section in sections %}
-            <button class="w3-bar-item w3-button w3-hover-white tablink"
-                    onclick="openTab(event, '{{ section.id }}', 'tab', 'tablink', 'w3-white')"><span class="w3-medium">{{ section.name }}</span></button>
-        {% endfor %}
-    </div>
+                <div class="col-xl">
+                    <div class="card m-2" style="">
+                        <div class="card-body text-center shadow rounded rounded-3">
 
-    {% for section in sections %}
-        <div id="{{ section.id }}" class="w3-card w3-white tab w3-padding-large" style="display:none">
-            {% for formation in section.formations %}
-                <div class="w3-card-4 w3-padding w3-white w3-row">
-                    <div class="w3-container w3-third">
-                        <h3><b>{{ formation.title }}</b></h3>
-                        <h5><span class="w3-opacity">Posté le {{ formation.date_posted }}</span></h5>
-                        <p><b>Description : </b>{{ formation.description }}</p>
-                    </div>
+                            <img class="rounded-circle mb-3 mt-4"
+                                 src="/media/formation_image/concept_generaux.jpg"
+                                 width="160" height="160">
 
-                    <div class="w3-container w3-twothird">
-                        <video class="w3-padding" width="100%" height="auto" controls>
-                              <source src="{{ formation.video_relative_path }}" type="video/mp4">
-                                Your browser does not support the video tag.
-                        </video>
+                            <h4 class="card-title"
+                                style="text-align: center;padding: 10px;padding-bottom: 0px;padding-top: -11px;">{{ client_training_course.name }}</h4>
+                            <p class="card-text" style="padding-top: 0px;padding-bottom: 0px;">{{ client_training_course.title }} <br>
+                                Temps requis : {{ client_training_course.hours_needed }}h{{ client_training_course.minutes_needed }}
+                            </p>
+
+                            {% if next_video is None %}
+                                <p> Vous avez fini cette formations, vous pouvez revoir les videos dans la librairies de video</p>
+                            {% elif next_video.video_order == 1 %}
+                                <a href="{% url 'training_course_video_page' training_course_pk=client_training_course.pk training_video_pk=next_video.pk %}" class="btn btn-primary" type=""
+                                    style="background: var(--bs-teal);font-size: 16px;font-weight: bold;border-color: var(--bs-teal);">
+                                    Débuter
+                                </a>
+
+                            {% else %}
+                                <a href="{% url 'training_course_video_page' training_course_pk=client_training_course.pk training_video_pk=next_video.pk %}" class="btn btn-primary" type=""
+                                    style="background: var(--bs-teal);font-size: 16px;font-weight: bold;border-color: var(--bs-teal);">
+                                    Continuer
+                                </a>
+                            {% endif %}
+
+                            <h4 class="small fw-bold" style="text-align: left;">Avancement<span
+                                    class="float-end">{{ progression }}%</span></h4>
+
+                            <div class="progress progress-sm mb-3">
+                                <div class="progress-bar bg-info" aria-valuenow="{{ progression }}" aria-valuemin="0" aria-valuemax="100"
+                                     style="width: {{ progression }}%;"><span class="visually-hidden">{{ progression }}%</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            {% endfor %}
+            {% endif %}
+
+
+            <div class="col-xl">
+                <div class="card m-2" style="">
+                    <div class="card-body text-center shadow rounded rounded-3">
+
+                        <img class="rounded-circle mb-3 mt-4"
+                             src="/media/formation_image/concept_generaux.jpg"
+                             width="160" height="160">
+
+                        <h4 class="card-title"
+                            style="text-align: center;padding: 10px;padding-bottom: 0px;padding-top: -11px;">Module de Formation Pratique</h4>
+                        <p class="card-text" style="padding-top: 0px;padding-bottom: 0px;">  <br>
+                            Ce module contient des videos
+                        </p>
+
+                        <a href="{% url 'practical_formation' %}" class="btn btn-primary" type=""
+                            style="background: var(--bs-teal);font-size: 16px;font-weight: bold;border-color: var(--bs-teal);">
+                            Voir
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl">
+                <div class="card m-2" style="">
+                    <div class="card-body text-center shadow rounded rounded-3">
+
+                        <img class="rounded-circle mb-3 mt-4"
+                             src="/media/formation_image/concept_generaux.jpg"
+                             width="160" height="160">
+
+                        <h4 class="card-title"
+                            style="text-align: center;padding: 10px;padding-bottom: 0px;padding-top: -11px;">Toute les Formations</h4>
+                        <p class="card-text" style="padding-top: 0px;padding-bottom: 0px;">  <br>
+                            Ce module contient des videos
+                        </p>
+
+                        <a href="{% url 'practical_formation' %}" class="btn btn-primary" type=""
+                            style="background: var(--bs-teal);font-size: 16px;font-weight: bold;border-color: var(--bs-teal);">
+                            Voir
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+
+
         </div>
-    {% endfor %}
-
-
-
-
+    </div>
 
 {% endblock content %}

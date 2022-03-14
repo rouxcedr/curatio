@@ -1,0 +1,11 @@
+{% autoescape off %}
+Bonjour,
+
+Voici votre nom d'utilisateur pour http://groupecuratio.ca .
+
+{{username}}
+
+Sincèrement,
+Groupe Curatio
+
+{% endautoescape %}

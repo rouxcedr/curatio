@@ -6,9 +6,9 @@ from .forms import *
 
 class CustomUserAdmin(UserAdmin):
     fieldsets = (
-        *UserAdmin.fieldsets,  # original form fieldsets, expanded
-        (                      # new fieldset added on to the bottom
-            'Types de Compte',  # group heading of your choice; set to None for a blank space instead of a header
+        *UserAdmin.fieldsets,
+        (
+            'Types de Compte',
             {
                 'fields': (
                     'type',
