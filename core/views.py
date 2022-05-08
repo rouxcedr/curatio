@@ -176,17 +176,17 @@ def ProfilePage(request):
             client = None
 
         client_training_course = TrainingCourse.objects.get(client=client)
-
+        training_videos = client_training_course.training_video.order_by("video_order")
     except TrainingCourse.DoesNotExist:
         client_training_course = None
-
+        training_videos = None
     try:
         progression = int((request.user.user_formation_tracking.test_completed / len(client_training_course.training_video.all())) * 100)
     except ProgressionTracking.DoesNotExist:
         progression = 0
 
 
-    training_videos = client_training_course.training_video.order_by("video_order")
+
     operateur_form = EmailForm()
     clients_operators = Operator.objects.filter(operatormore__client=request.user)
 
