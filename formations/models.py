@@ -8,8 +8,8 @@ import random
 
 class TrainingCourse(models.Model):
     client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name='training_course')
-    name = models.CharField(max_length=100)
-    title = models.CharField(max_length=100)
+    name = models.CharField(max_length=200)
+    title = models.CharField(max_length=200)
     description = models.TextField()
     hours_needed = models.IntegerField()
     minutes_needed = models.IntegerField()
@@ -27,7 +27,7 @@ class TrainingCourse(models.Model):
 
 
 class Video(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=200)
     video_path = models.FilePathField(path="/home/grouewze/public_html/media/video_formations", recursive=True)
     # video_path = models.FilePathField(path="/home/cedric/EntreprisePR/Curatio/media/video_formations", recursive=True)
 
@@ -68,8 +68,8 @@ class VideoQuizz(models.Model):
 
 class QuizzQuestion(models.Model):
     exam_formation = models.ForeignKey(VideoQuizz, on_delete=models.CASCADE, related_name='quizz_question')
-    question = models.CharField(max_length=100)
-    answer = models.CharField(max_length=100)
+    question = models.CharField(max_length=500)
+    answer = models.CharField(max_length=500)
 
     def __str__(self):
         return self.question
@@ -93,7 +93,7 @@ class QuizzQuestion(models.Model):
 
 class QuestionPossibleAnswer(models.Model):
     question = models.ForeignKey(QuizzQuestion, on_delete=models.CASCADE, related_name='question_possible_answer')
-    answer = models.CharField(max_length=100)
+    answer = models.CharField(max_length=500)
 
     def __str__(self):
         return f"{self.answer} - {self.question}"
