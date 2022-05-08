@@ -45,7 +45,7 @@ class Video(models.Model):
 
 class TrainingVideo(models.Model):
     training_course = models.ForeignKey(TrainingCourse, on_delete=models.CASCADE, related_name='training_video')
-    video = models.OneToOneField(Video, on_delete=models.CASCADE, related_name='trainings_courses')
+    video = models.ForeignKey(Video, on_delete=models.CASCADE, related_name='trainings_courses')
     video_order = models.IntegerField()
 
 
