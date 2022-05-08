@@ -34,7 +34,7 @@ class Video(models.Model):
     @property
     def video_relative_path(self):
         # return self.video_path.replace("/home/cedric/EntreprisePR/Curatio", "")
-        return self.video.replace("/home/grouewze/public_html", "")
+        return self.video_path.replace("/home/grouewze/public_html", "")
 
     def get_exam(self):
         return self.video_quizz
