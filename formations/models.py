@@ -96,7 +96,7 @@ class QuestionPossibleAnswer(models.Model):
     answer = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.answer
+        return f"{self.answer} - {self.question}"
 
 class ProgressionTracking(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='user_formation_tracking')
