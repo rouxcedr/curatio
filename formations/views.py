@@ -3,7 +3,7 @@ from .models import *
 from core.models import *
 from core.decorators import allowed_users
 import time
-
+from django.contrib.admin.views.decorators import staff_member_required
 
 # Create your views here.
 @allowed_users(allowed_roles=['FORMATION'])
@@ -131,3 +131,28 @@ def finish_video_quizz(request, training_course_pk, training_video_pk):
 @allowed_users(allowed_roles=['FORMATION'])
 def practicalFormation(request):
     return render(request, template_name='formations/formation_template.html')
+
+
+@staff_member_required
+def add_video_formation(request):
+    if request.method == "POST":
+        video_formation = request.POST["exam_formation"]
+        questions_data = request.POST["video_formation_questions"].split("\n")
+
+        video_quizz = VideoQuizz.objects.get(pk=int(video_formation))
+
+        for question in questions_data:
+            question_data = question.split("|")
+            question = question_data[0].strip()
+            question_good_answer = question_data[1].strip()
+
+            new_quizz_question = QuizzQuestion.objects.create(exam_formation=video_quizz, question=question, answer=question_good_answer)
+            new_quizz_question.save()
+
+            for bad_answer in question_data[2:]:
+                bad_answer = QuestionPossibleAnswer.objects.create(question=new_quizz_question, answer=bad_answer.strip())
+                bad_answer.save()
+
+    videos_formations = VideoQuizz.objects.all()
+    return render(request, template_name='formations/add_video_formation.html', context={"videos":videos_formations})
+

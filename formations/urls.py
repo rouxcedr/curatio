@@ -9,6 +9,7 @@ urlpatterns = [
     path('finished_quizz/<training_course_pk>/<training_video_pk>', views.finish_video_quizz, name='finish_video_quizz'),
     path('formation_practical_page/', views.practicalFormation, name='practical_formation'),
     path('formation_finish/<training_course_pk>', views.finish_training_course, name='finish_training_course'),
+    path('add_video_formation/', views.add_video_formation, name='add_video_formation')
 
     #path('upload_formations/', views.upload_formation, name='upload_formation'),
 ]

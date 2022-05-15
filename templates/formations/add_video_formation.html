@@ -1,0 +1,20 @@
+{% extends  "core/base.html" %}
+{% block content %}
+
+    <form method="POST">
+        {% csrf_token %}
+        <select name="exam_formation" required="" id="id_exam_formation">
+            <option value="" selected="">---------</option>
+            {% for video in videos %}
+                <option value="{{ video.pk }}">{{ video.video.name}}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <hr>
+        <br>
+        <textarea id="video_formation_questions" name="video_formation_questions" rows="4" cols="50"></textarea>
+
+        <button class="btn btn-primary d-block btn-user w-100" type="submit">Ajouter</button>
+    </form>
+
+{% endblock content %}
