@@ -76,7 +76,7 @@ def video_quizz_page(request, training_course_pk, video_quizz_pk):
     video = video_quizz.video
 
     training_course = TrainingCourse.objects.get(pk=training_course_pk)
-    training_course_video = training_course.training_video.get(video=video)
+    training_course_video = TrainingVideo.objects.get(training_course=training_course, video=video)
 
     questions = video_quizz.get_exam_questions()
     all_training_course_videos = training_course.training_video.all()
