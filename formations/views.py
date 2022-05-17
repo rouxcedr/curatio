@@ -59,7 +59,7 @@ def training_course_video_page(request, training_course_pk, training_video_pk):
     previous_video_quizz = None
 
     if training_video.video_order != 1:
-        previous_video_quizz = TrainingVideo.objects.get(video_order=training_video.video_order - 1).video.video_quizz
+        previous_video_quizz = TrainingVideo.objects.get(training_course=training_course ,video_order=training_video.video_order - 1).video.video_quizz
 
     context = {
         "training_course": training_course,
