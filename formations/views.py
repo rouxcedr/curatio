@@ -90,7 +90,7 @@ def video_quizz_page(request, training_course_pk, video_quizz_pk):
 
     next_video = None
     if training_course_video.video_order != len(all_training_course_videos):
-        next_video = TrainingVideo.objects.get(video_order=training_course_video.video_order + 1)
+        next_video = TrainingVideo.objects.get(training_course=training_course ,video_order=training_course_video.video_order + 1)
 
     context = {
         "training_course": training_course,
