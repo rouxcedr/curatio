@@ -54,12 +54,11 @@ def training_course_video_page(request, training_course_pk, training_video_pk):
     training_course = TrainingCourse.objects.get(pk=training_course_pk)
     training_video = TrainingVideo.objects.get(pk=training_video_pk)
 
-    progression = int(( (training_video.video_order * 2 - 1) / (len(training_course.training_video.all()) * 2)) * 100)
-    print(training_video.video_order)
+    progression = int(((training_video.video_order * 2 - 1) / (len(training_course.training_video.all()) * 2)) * 100)
     previous_video_quizz = None
 
     if training_video.video_order != 1:
-        previous_video_quizz = TrainingVideo.objects.get(training_course=training_course ,video_order=training_video.video_order - 1).video.video_quizz
+        previous_video_quizz = TrainingVideo.objects.get(training_course=training_course,video_order=(training_video.video_order - 1)).video.video_quizz
 
     context = {
         "training_course": training_course,
@@ -90,7 +89,7 @@ def video_quizz_page(request, training_course_pk, video_quizz_pk):
 
     next_video = None
     if training_course_video.video_order != len(all_training_course_videos):
-        next_video = TrainingVideo.objects.get(training_course=training_course ,video_order=training_course_video.video_order + 1)
+        next_video = TrainingVideo.objects.get(training_course=training_course, video_order=training_course_video.video_order + 1)
 
     context = {
         "training_course": training_course,
