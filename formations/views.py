@@ -58,7 +58,7 @@ def training_course_video_page(request, training_course_pk, training_video_pk):
     previous_video_quizz = None
 
     if training_video.video_order != 1:
-        previous_video_quizz = TrainingVideo.objects.get(training_course=training_course,video_order=(training_video.video_order - 1)).video.video_quizz
+        previous_video_quizz = TrainingVideo.objects.get(training_course=training_course, video_order=training_video.video_order - 1).video
 
     context = {
         "training_course": training_course,
@@ -76,7 +76,7 @@ def video_quizz_page(request, training_course_pk, video_quizz_pk):
     video = video_quizz.video
 
     training_course = TrainingCourse.objects.get(pk=training_course_pk)
-    training_course_video = training_course.training_video.get(pk=video.pk)
+    training_course_video = training_course.training_video.get(video=video)
 
     questions = video_quizz.get_exam_questions()
     all_training_course_videos = training_course.training_video.all()
